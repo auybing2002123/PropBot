@@ -2,16 +2,16 @@
  * 对话 API
  */
 import api from './index'
-import { createSSEClient } from '@/utils/sse'
-import type { SSEEvent, ChatParams } from '@/types/chat'
+import { createSSEClient, type SSEClient } from '@/utils/sse'
+import type { ChatParams } from '@/types/chat'
 
 /**
- * 发送对话消息（流式响应）
+ * 创建对话客户端（支持取消）
  * @param params 对话参数
+ * @returns SSE 客户端，可调用 abort() 取消
  */
-export async function* sendMessage(params: ChatParams): AsyncGenerator<SSEEvent> {
-    const client = createSSEClient('/chat', params)
-    yield* client.stream()
+export function createChatClient(params: ChatParams): SSEClient {
+    return createSSEClient('/chat', params)
 }
 
 /**

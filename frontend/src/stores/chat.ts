@@ -4,10 +4,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
-import { sendMessage, clearSession } from '@/api/chat'
+import { createChatClient, clearSession } from '@/api/chat'
 import { ROLE_CONFIG } from '@/types/chat'
 import { useConversationStore } from './conversation'
 import type { ChatMessage, RoleId, SSEEvent, ExpertAnalysis, ThinkingStep } from '@/types/chat'
+import type { SSEClient } from '@/utils/sse'
 
 export const useChatStore = defineStore('chat', () => {
     // 状态
@@ -31,6 +32,9 @@ export const useChatStore = defineStore('chat', () => {
     const isThinking = ref(false)
     const showThinking = ref(true)  // 默认展开思考过程
     const thinkingStartTime = ref<number>(0)  // 思考开始时间戳
+
+    // 当前 SSE 客户端（用于取消）
+    let currentClient: SSEClient | null = null
 
     /**
      * 添加用户消息
@@ -172,7 +176,8 @@ export const useChatStore = defineStore('chat', () => {
         currentRoleMessageId.value = msgId
 
         try {
-            const generator = sendMessage({
+            // 创建 SSE 客户端（支持取消）
+            currentClient = createChatClient({
                 session_id: sessionId.value,
                 message: content,
                 mode: deepMode.value ? 'discussion' : 'standard',
@@ -180,22 +185,32 @@ export const useChatStore = defineStore('chat', () => {
                 user_id: userId
             })
 
-            for await (const event of generator) {
+            for await (const event of currentClient.stream()) {
+                // 如果已被取消，停止处理
+                if (currentClient.isAborted()) {
+                    break
+                }
                 handleSSEEvent(event)
             }
         } catch (error) {
-            console.error('发送消息失败:', error)
-            messages.value.push({
-                id: uuidv4(),
-                role: 'assistant',
-                content: '抱歉，服务暂时不可用，请稍后重试。',
-                timestamp: Date.now()
-            })
+            // 如果是取消导致的错误，不显示错误消息
+            if (currentClient?.isAborted()) {
+                console.log('用户取消了回答')
+            } else {
+                console.error('发送消息失败:', error)
+                messages.value.push({
+                    id: uuidv4(),
+                    role: 'assistant',
+                    content: '抱歉，服务暂时不可用，请稍后重试。',
+                    timestamp: Date.now()
+                })
+            }
         } finally {
             isLoading.value = false
             isThinking.value = false
             isProcessingSummary.value = false  // 重置整合状态
             currentRoleMessageId.value = null
+            currentClient = null
             clearPendingExpertAnalysis()
         }
     }
@@ -603,6 +618,33 @@ export const useChatStore = defineStore('chat', () => {
         messages.value = historyMessages
     }
 
+    /**
+     * 停止生成回答
+     */
+    function stopGeneration() {
+        if (currentClient) {
+            currentClient.abort()
+
+            // 更新当前消息状态
+            if (currentRoleMessageId.value) {
+                const msg = messages.value.find(m => m.id === currentRoleMessageId.value)
+                if (msg) {
+                    msg.loading = false
+                    // 如果没有内容，添加提示
+                    if (!msg.content) {
+                        msg.content = '（已停止生成）'
+                    } else {
+                        msg.content += '\n\n（已停止生成）'
+                    }
+                }
+            }
+
+            // 重置状态
+            isLoading.value = false
+            isThinking.value = false
+        }
+    }
+
     return {
         // 状态
         sessionId,
@@ -625,6 +667,7 @@ export const useChatStore = defineStore('chat', () => {
         setDeepMode,
         send,
         clear,
-        loadConversation
+        loadConversation,
+        stopGeneration
     }
 })

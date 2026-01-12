@@ -4,7 +4,7 @@
  * 参考图片布局：输入框在上，功能按钮在下
  */
 import { ref } from 'vue'
-import { Promotion } from '@element-plus/icons-vue'
+import { Promotion, VideoPause } from '@element-plus/icons-vue'
 
 // Props
 const props = defineProps<{
@@ -15,6 +15,7 @@ const props = defineProps<{
 // Emits
 const emit = defineEmits<{
   send: [content: string]
+  stop: []
   'update:deepMode': [value: boolean]
 }>()
 
@@ -27,6 +28,11 @@ function handleSend() {
   
   emit('send', content)
   inputValue.value = ''
+}
+
+// 停止生成
+function handleStop() {
+  emit('stop')
 }
 
 // 按下回车发送
@@ -80,11 +86,20 @@ function toggleDeepMode() {
         </div>
         
         <div class="action-right">
+          <!-- 停止按钮（生成中显示） -->
+          <el-button
+            v-if="loading"
+            type="danger"
+            :icon="VideoPause"
+            circle
+            class="stop-btn"
+            @click="handleStop"
+          />
           <!-- 发送按钮 -->
           <el-button
+            v-else
             type="primary"
             :icon="Promotion"
-            :loading="loading"
             :disabled="!inputValue.trim()"
             circle
             class="send-btn"
@@ -203,6 +218,19 @@ function toggleDeepMode() {
         background: #e5e7eb;
         border-color: #e5e7eb;
         color: #999;
+      }
+    }
+
+    // 停止按钮
+    .stop-btn {
+      width: 32px;
+      height: 32px;
+      background: #ff4d4f;
+      border-color: #ff4d4f;
+      
+      &:hover {
+        background: #ff7875;
+        border-color: #ff7875;
       }
     }
   }

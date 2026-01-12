@@ -3,7 +3,7 @@
  * 对话页面
  * 参考 DeepSeek 风格的美观设计
  */
-import { ref, nextTick, onMounted, watch } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import { useAuthStore } from '@/stores/auth'
 import RoleMessage from '@/components/chat/RoleMessage.vue'
@@ -73,6 +73,13 @@ watch(() => chatStore.messages.length, () => {
 
 onMounted(() => {
   scrollToBottom()
+})
+
+// 页面卸载时停止生成
+onUnmounted(() => {
+  if (chatStore.isLoading) {
+    chatStore.stopGeneration()
+  }
 })
 </script>
 
@@ -150,6 +157,7 @@ onMounted(() => {
         :loading="chatStore.isLoading"
         :deep-mode="chatStore.deepMode"
         @send="handleSend"
+        @stop="chatStore.stopGeneration"
         @update:deep-mode="chatStore.setDeepMode"
       />
     </div>

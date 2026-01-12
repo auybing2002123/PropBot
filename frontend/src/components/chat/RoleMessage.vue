@@ -6,10 +6,7 @@
 import { computed, ref, watch, onUnmounted, onMounted } from 'vue'
 import { marked } from 'marked'
 import { 
-  Money, 
   Document, 
-  TrendCharts, 
-  CircleCheck,
   Loading,
   ArrowDown,
   ArrowUp,
@@ -111,27 +108,11 @@ function toggleExpertExpand(stepId: string) {
   }
 }
 
-// 图标映射
-const iconMap: Record<string, any> = {
-  Money,
-  Document,
-  TrendCharts,
-  CircleCheck
-}
-
-// 获取图标组件（loading 时也显示角色图标，不转圈）
-const iconComponent = computed(() => {
-  return props.roleIcon ? iconMap[props.roleIcon] : CircleCheck
-})
-
 // 渲染 Markdown 内容
 const renderedContent = computed(() => {
   if (!props.content) return ''
   return marked(props.content, { breaks: true })
 })
-
-// 边框颜色
-const borderColor = computed(() => props.roleColor || '#722ed1')
 
 // 渲染专家分析内容
 function renderExpertContent(content: string): string {
