@@ -19,6 +19,9 @@ const chatStore = useChatStore()
 const authStore = useAuthStore()
 const messageListRef = ref<HTMLElement | null>(null)
 
+// 用户是否手动滚动（用于判断是否暂停自动滚动）
+const userScrolledUp = ref(false)
+
 // 快捷功能卡片
 const quickCards = [
   { 
@@ -66,8 +69,27 @@ function scrollToBottom() {
   }
 }
 
-// 监听消息数量变化，自动滚动
+// 检测用户是否在底部附近（阈值 100px）
+function isNearBottom(): boolean {
+  if (!messageListRef.value) return true
+  const { scrollTop, scrollHeight, clientHeight } = messageListRef.value
+  return scrollHeight - scrollTop - clientHeight < 100
+}
+
+// 处理滚动事件，检测用户是否手动往上滚动
+function handleScroll() {
+  if (!chatStore.isLoading) {
+    // 不在加载中，重置状态
+    userScrolledUp.value = false
+    return
+  }
+  // 加载中时，检测用户是否滚离底部
+  userScrolledUp.value = !isNearBottom()
+}
+
+// 监听消息数量变化，自动滚动（新消息时重置用户滚动状态）
 watch(() => chatStore.messages.length, () => {
+  userScrolledUp.value = false  // 新消息时重置，自动滚动到底部
   nextTick(() => scrollToBottom())
 })
 
@@ -80,8 +102,8 @@ watch(
     return lastMsg.content
   },
   () => {
-    // 只在加载中时自动滚动（流式输出）
-    if (chatStore.isLoading) {
+    // 只在加载中且用户没有手动往上滚动时自动滚动
+    if (chatStore.isLoading && !userScrolledUp.value) {
       nextTick(() => scrollToBottom())
     }
   }
@@ -102,7 +124,7 @@ onUnmounted(() => {
 <template>
   <div class="chat-view">
     <!-- 消息列表 -->
-    <div ref="messageListRef" class="message-list">
+    <div ref="messageListRef" class="message-list" @scroll="handleScroll">
       <!-- 欢迎消息 -->
       <div v-if="chatStore.messages.length === 0" class="welcome-container">
         <div class="welcome-content">

@@ -27,8 +27,11 @@ class Settings(BaseSettings):
     APP_NAME: str = "购房决策智能助手"
     APP_VERSION: str = "1.0.0"
     
-    # CORS 配置
-    CORS_ORIGINS: list[str] = ["http://localhost:5173"]
+    # CORS 配置（支持本地开发和 cpolar 穿透）
+    CORS_ORIGINS: list[str] = [
+        "http://localhost:5173",
+        "https://16b270c6.r37.cpolar.top",  # cpolar 前端穿透地址
+    ]
     
     class Config:
         env_file = ".env"

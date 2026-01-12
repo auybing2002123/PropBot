@@ -2,7 +2,7 @@
 /**
  * 登录/注册页面
  */
-import { ref, reactive } from 'vue'
+import { ref, reactive, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
@@ -50,6 +50,8 @@ async function handleLogin() {
     try {
         await authStore.loginUser(form.username.trim(), form.password)
         ElMessage.success('登录成功')
+        // 确保状态更新后再跳转
+        await nextTick()
         router.replace('/chat')
     } catch (error: any) {
         const message = error?.response?.data?.detail?.message || '登录失败'
@@ -90,6 +92,8 @@ async function handleRegister() {
             form.nickname.trim() || undefined
         )
         ElMessage.success('注册成功')
+        // 确保状态更新后再跳转
+        await nextTick()
         router.replace('/chat')
     } catch (error: any) {
         const message = error?.response?.data?.detail?.message || '注册失败'

@@ -26,6 +26,13 @@ export default defineConfig({
     },
     server: {
         port: 5173,
+        host: '0.0.0.0',  // 允许外部访问
+        // 允许 cpolar 穿透域名访问
+        allowedHosts: [
+            '.cpolar.top',
+            '.cpolar.cn',
+            '.r37.cpolar.top'
+        ],
         proxy: {
             '/api': {
                 target: 'http://localhost:8080',
