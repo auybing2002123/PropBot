@@ -66,10 +66,26 @@ function scrollToBottom() {
   }
 }
 
-// 监听消息变化，自动滚动
+// 监听消息数量变化，自动滚动
 watch(() => chatStore.messages.length, () => {
   nextTick(() => scrollToBottom())
 })
+
+// 监听最后一条消息的内容变化（流式输出时滚动）
+watch(
+  () => {
+    const msgs = chatStore.messages
+    if (msgs.length === 0) return ''
+    const lastMsg = msgs[msgs.length - 1]
+    return lastMsg.content
+  },
+  () => {
+    // 只在加载中时自动滚动（流式输出）
+    if (chatStore.isLoading) {
+      nextTick(() => scrollToBottom())
+    }
+  }
+)
 
 onMounted(() => {
   scrollToBottom()
