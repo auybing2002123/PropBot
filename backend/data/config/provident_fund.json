@@ -1,0 +1,23 @@
+{
+    "update_date": "2025-01-10",
+    "cities": {
+        "南宁": {
+            "single_max_loan": 600000,
+            "couple_max_loan": 800000,
+            "min_deposit_months": 12,
+            "first_home_down_payment": 0.20,
+            "second_home_down_payment": 0.30,
+            "loan_rate_below_5y": 2.35,
+            "loan_rate_above_5y": 2.85
+        },
+        "柳州": {
+            "single_max_loan": 500000,
+            "couple_max_loan": 700000,
+            "min_deposit_months": 12,
+            "first_home_down_payment": 0.20,
+            "second_home_down_payment": 0.30,
+            "loan_rate_below_5y": 2.35,
+            "loan_rate_above_5y": 2.85
+        }
+    }
+}

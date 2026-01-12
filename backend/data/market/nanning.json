@@ -1,0 +1,456 @@
+{
+    "city": "南宁",
+    "update_date": "2025-01-10",
+    "districts": {
+        "青秀区": {
+            "avg_price": 15800,
+            "price_range": [
+                12000,
+                25000
+            ],
+            "monthly_sales": 320,
+            "inventory": 4500,
+            "inventory_months": 14.1,
+            "yoy_change": -2.5,
+            "mom_change": -0.3,
+            "hot_level": "高",
+            "description": "南宁核心城区，配套成熟，学区资源丰富"
+        },
+        "兴宁区": {
+            "avg_price": 11200,
+            "price_range": [
+                8500,
+                15000
+            ],
+            "monthly_sales": 180,
+            "inventory": 2800,
+            "inventory_months": 15.6,
+            "yoy_change": -3.2,
+            "mom_change": -0.5,
+            "hot_level": "中",
+            "description": "老城区，交通便利，生活配套完善"
+        },
+        "江南区": {
+            "avg_price": 10500,
+            "price_range": [
+                8000,
+                14000
+            ],
+            "monthly_sales": 250,
+            "inventory": 3200,
+            "inventory_months": 12.8,
+            "yoy_change": -1.8,
+            "mom_change": 0.2,
+            "hot_level": "中",
+            "description": "发展较快，新盘较多，性价比高"
+        },
+        "西乡塘区": {
+            "avg_price": 9800,
+            "price_range": [
+                7500,
+                13000
+            ],
+            "monthly_sales": 280,
+            "inventory": 3800,
+            "inventory_months": 13.6,
+            "yoy_change": -2.1,
+            "mom_change": -0.1,
+            "hot_level": "中",
+            "description": "高校聚集，年轻人多，租赁市场活跃"
+        },
+        "良庆区": {
+            "avg_price": 12500,
+            "price_range": [
+                9500,
+                18000
+            ],
+            "monthly_sales": 350,
+            "inventory": 5200,
+            "inventory_months": 14.9,
+            "yoy_change": -1.5,
+            "mom_change": 0.3,
+            "hot_level": "高",
+            "description": "五象新区核心，发展潜力大，新盘集中"
+        },
+        "邕宁区": {
+            "avg_price": 7500,
+            "price_range": [
+                6000,
+                10000
+            ],
+            "monthly_sales": 120,
+            "inventory": 1800,
+            "inventory_months": 15.0,
+            "yoy_change": -4.0,
+            "mom_change": -0.8,
+            "hot_level": "低",
+            "description": "远郊区域，价格较低，配套待完善"
+        },
+        "武鸣区": {
+            "avg_price": 6800,
+            "price_range": [
+                5500,
+                9000
+            ],
+            "monthly_sales": 80,
+            "inventory": 1200,
+            "inventory_months": 15.0,
+            "yoy_change": -3.5,
+            "mom_change": -0.6,
+            "hot_level": "低",
+            "description": "卫星城，适合养老，价格实惠"
+        }
+    },
+    "price_trends": {
+        "青秀区": [
+            {
+                "month": "2025-01",
+                "price": 16200
+            },
+            {
+                "month": "2025-02",
+                "price": 16100
+            },
+            {
+                "month": "2025-03",
+                "price": 16050
+            },
+            {
+                "month": "2025-04",
+                "price": 15980
+            },
+            {
+                "month": "2025-05",
+                "price": 15920
+            },
+            {
+                "month": "2025-06",
+                "price": 15900
+            },
+            {
+                "month": "2025-07",
+                "price": 15880
+            },
+            {
+                "month": "2025-08",
+                "price": 15850
+            },
+            {
+                "month": "2025-09",
+                "price": 15830
+            },
+            {
+                "month": "2025-10",
+                "price": 15820
+            },
+            {
+                "month": "2025-11",
+                "price": 15810
+            },
+            {
+                "month": "2025-12",
+                "price": 15800
+            }
+        ],
+        "兴宁区": [
+            {
+                "month": "2025-01",
+                "price": 11600
+            },
+            {
+                "month": "2025-02",
+                "price": 11550
+            },
+            {
+                "month": "2025-03",
+                "price": 11480
+            },
+            {
+                "month": "2025-04",
+                "price": 11420
+            },
+            {
+                "month": "2025-05",
+                "price": 11380
+            },
+            {
+                "month": "2025-06",
+                "price": 11350
+            },
+            {
+                "month": "2025-07",
+                "price": 11320
+            },
+            {
+                "month": "2025-08",
+                "price": 11280
+            },
+            {
+                "month": "2025-09",
+                "price": 11250
+            },
+            {
+                "month": "2025-10",
+                "price": 11230
+            },
+            {
+                "month": "2025-11",
+                "price": 11210
+            },
+            {
+                "month": "2025-12",
+                "price": 11200
+            }
+        ],
+        "江南区": [
+            {
+                "month": "2025-01",
+                "price": 10700
+            },
+            {
+                "month": "2025-02",
+                "price": 10680
+            },
+            {
+                "month": "2025-03",
+                "price": 10650
+            },
+            {
+                "month": "2025-04",
+                "price": 10600
+            },
+            {
+                "month": "2025-05",
+                "price": 10580
+            },
+            {
+                "month": "2025-06",
+                "price": 10560
+            },
+            {
+                "month": "2025-07",
+                "price": 10540
+            },
+            {
+                "month": "2025-08",
+                "price": 10520
+            },
+            {
+                "month": "2025-09",
+                "price": 10510
+            },
+            {
+                "month": "2025-10",
+                "price": 10500
+            },
+            {
+                "month": "2025-11",
+                "price": 10490
+            },
+            {
+                "month": "2025-12",
+                "price": 10500
+            }
+        ],
+        "良庆区": [
+            {
+                "month": "2025-01",
+                "price": 12700
+            },
+            {
+                "month": "2025-02",
+                "price": 12680
+            },
+            {
+                "month": "2025-03",
+                "price": 12650
+            },
+            {
+                "month": "2025-04",
+                "price": 12600
+            },
+            {
+                "month": "2025-05",
+                "price": 12580
+            },
+            {
+                "month": "2025-06",
+                "price": 12560
+            },
+            {
+                "month": "2025-07",
+                "price": 12540
+            },
+            {
+                "month": "2025-08",
+                "price": 12520
+            },
+            {
+                "month": "2025-09",
+                "price": 12510
+            },
+            {
+                "month": "2025-10",
+                "price": 12500
+            },
+            {
+                "month": "2025-11",
+                "price": 12490
+            },
+            {
+                "month": "2025-12",
+                "price": 12500
+            }
+        ],
+        "西乡塘区": [
+            {
+                "month": "2025-01",
+                "price": 10050
+            },
+            {
+                "month": "2025-02",
+                "price": 10020
+            },
+            {
+                "month": "2025-03",
+                "price": 9990
+            },
+            {
+                "month": "2025-04",
+                "price": 9960
+            },
+            {
+                "month": "2025-05",
+                "price": 9930
+            },
+            {
+                "month": "2025-06",
+                "price": 9900
+            },
+            {
+                "month": "2025-07",
+                "price": 9880
+            },
+            {
+                "month": "2025-08",
+                "price": 9860
+            },
+            {
+                "month": "2025-09",
+                "price": 9840
+            },
+            {
+                "month": "2025-10",
+                "price": 9820
+            },
+            {
+                "month": "2025-11",
+                "price": 9810
+            },
+            {
+                "month": "2025-12",
+                "price": 9800
+            }
+        ],
+        "邕宁区": [
+            {
+                "month": "2025-01",
+                "price": 7800
+            },
+            {
+                "month": "2025-02",
+                "price": 7780
+            },
+            {
+                "month": "2025-03",
+                "price": 7750
+            },
+            {
+                "month": "2025-04",
+                "price": 7720
+            },
+            {
+                "month": "2025-05",
+                "price": 7680
+            },
+            {
+                "month": "2025-06",
+                "price": 7650
+            },
+            {
+                "month": "2025-07",
+                "price": 7620
+            },
+            {
+                "month": "2025-08",
+                "price": 7580
+            },
+            {
+                "month": "2025-09",
+                "price": 7550
+            },
+            {
+                "month": "2025-10",
+                "price": 7530
+            },
+            {
+                "month": "2025-11",
+                "price": 7510
+            },
+            {
+                "month": "2025-12",
+                "price": 7500
+            }
+        ],
+        "武鸣区": [
+            {
+                "month": "2025-01",
+                "price": 7050
+            },
+            {
+                "month": "2025-02",
+                "price": 7020
+            },
+            {
+                "month": "2025-03",
+                "price": 6990
+            },
+            {
+                "month": "2025-04",
+                "price": 6960
+            },
+            {
+                "month": "2025-05",
+                "price": 6930
+            },
+            {
+                "month": "2025-06",
+                "price": 6900
+            },
+            {
+                "month": "2025-07",
+                "price": 6880
+            },
+            {
+                "month": "2025-08",
+                "price": 6860
+            },
+            {
+                "month": "2025-09",
+                "price": 6840
+            },
+            {
+                "month": "2025-10",
+                "price": 6820
+            },
+            {
+                "month": "2025-11",
+                "price": 6810
+            },
+            {
+                "month": "2025-12",
+                "price": 6800
+            }
+        ]
+    }
+}

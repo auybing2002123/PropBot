@@ -1,0 +1,25 @@
+{
+    "update_date": "2025-01-10",
+    "deed_tax": {
+        "first_home_below_90": 0.01,
+        "first_home_above_90": 0.015,
+        "second_home_below_90": 0.01,
+        "second_home_above_90": 0.02,
+        "third_home": 0.03
+    },
+    "vat": {
+        "below_2y": 0.056,
+        "above_2y": 0
+    },
+    "income_tax": {
+        "rate": 0.01,
+        "diff_rate": 0.20,
+        "full_5y_only": 0
+    },
+    "other_fees": {
+        "registration_fee": 80,
+        "stamp_duty": 0.0005,
+        "agent_fee_rate": 0.02,
+        "misc_fees": 3000
+    }
+}

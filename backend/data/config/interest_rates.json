@@ -1,0 +1,21 @@
+{
+    "update_date": "2025-01-10",
+    "lpr": {
+        "lpr_1y": 3.10,
+        "lpr_5y": 3.60
+    },
+    "commercial_loan": {
+        "first_home": {
+            "rate": 3.40,
+            "rate_formula": "LPR-20BP"
+        },
+        "second_home": {
+            "rate": 3.80,
+            "rate_formula": "LPR+20BP"
+        }
+    },
+    "provident_fund": {
+        "below_5y": 2.35,
+        "above_5y": 2.85
+    }
+}

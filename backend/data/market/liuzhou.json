@@ -1,0 +1,392 @@
+{
+    "city": "柳州",
+    "update_date": "2025-01-10",
+    "districts": {
+        "城中区": {
+            "avg_price": 9500,
+            "price_range": [
+                7500,
+                13000
+            ],
+            "monthly_sales": 150,
+            "inventory": 1800,
+            "inventory_months": 12.0,
+            "yoy_change": -2.8,
+            "mom_change": -0.4,
+            "hot_level": "高",
+            "description": "柳州核心区，商业繁华，配套成熟"
+        },
+        "鱼峰区": {
+            "avg_price": 8200,
+            "price_range": [
+                6500,
+                11000
+            ],
+            "monthly_sales": 180,
+            "inventory": 2200,
+            "inventory_months": 12.2,
+            "yoy_change": -2.2,
+            "mom_change": -0.2,
+            "hot_level": "中",
+            "description": "工业区转型，新盘增多，性价比高"
+        },
+        "柳南区": {
+            "avg_price": 7800,
+            "price_range": [
+                6000,
+                10500
+            ],
+            "monthly_sales": 160,
+            "inventory": 2000,
+            "inventory_months": 12.5,
+            "yoy_change": -3.0,
+            "mom_change": -0.5,
+            "hot_level": "中",
+            "description": "老工业区，交通便利，价格适中"
+        },
+        "柳北区": {
+            "avg_price": 7200,
+            "price_range": [
+                5800,
+                9500
+            ],
+            "monthly_sales": 140,
+            "inventory": 1900,
+            "inventory_months": 13.6,
+            "yoy_change": -3.5,
+            "mom_change": -0.6,
+            "hot_level": "中",
+            "description": "发展中区域，新楼盘较多"
+        },
+        "柳江区": {
+            "avg_price": 5800,
+            "price_range": [
+                4500,
+                7500
+            ],
+            "monthly_sales": 100,
+            "inventory": 1500,
+            "inventory_months": 15.0,
+            "yoy_change": -4.2,
+            "mom_change": -0.8,
+            "hot_level": "低",
+            "description": "新设区，价格较低，配套建设中"
+        },
+        "柳城县": {
+            "avg_price": 4500,
+            "price_range": [
+                3500,
+                6000
+            ],
+            "monthly_sales": 50,
+            "inventory": 800,
+            "inventory_months": 16.0,
+            "yoy_change": -5.0,
+            "mom_change": -1.0,
+            "hot_level": "低",
+            "description": "县城区域，适合本地刚需"
+        }
+    },
+    "price_trends": {
+        "城中区": [
+            {
+                "month": "2025-01",
+                "price": 9800
+            },
+            {
+                "month": "2025-02",
+                "price": 9750
+            },
+            {
+                "month": "2025-03",
+                "price": 9700
+            },
+            {
+                "month": "2025-04",
+                "price": 9650
+            },
+            {
+                "month": "2025-05",
+                "price": 9620
+            },
+            {
+                "month": "2025-06",
+                "price": 9600
+            },
+            {
+                "month": "2025-07",
+                "price": 9580
+            },
+            {
+                "month": "2025-08",
+                "price": 9560
+            },
+            {
+                "month": "2025-09",
+                "price": 9540
+            },
+            {
+                "month": "2025-10",
+                "price": 9520
+            },
+            {
+                "month": "2025-11",
+                "price": 9510
+            },
+            {
+                "month": "2025-12",
+                "price": 9500
+            }
+        ],
+        "鱼峰区": [
+            {
+                "month": "2025-01",
+                "price": 8400
+            },
+            {
+                "month": "2025-02",
+                "price": 8380
+            },
+            {
+                "month": "2025-03",
+                "price": 8350
+            },
+            {
+                "month": "2025-04",
+                "price": 8320
+            },
+            {
+                "month": "2025-05",
+                "price": 8300
+            },
+            {
+                "month": "2025-06",
+                "price": 8280
+            },
+            {
+                "month": "2025-07",
+                "price": 8260
+            },
+            {
+                "month": "2025-08",
+                "price": 8240
+            },
+            {
+                "month": "2025-09",
+                "price": 8230
+            },
+            {
+                "month": "2025-10",
+                "price": 8220
+            },
+            {
+                "month": "2025-11",
+                "price": 8210
+            },
+            {
+                "month": "2025-12",
+                "price": 8200
+            }
+        ],
+        "柳南区": [
+            {
+                "month": "2025-01",
+                "price": 8050
+            },
+            {
+                "month": "2025-02",
+                "price": 8020
+            },
+            {
+                "month": "2025-03",
+                "price": 7990
+            },
+            {
+                "month": "2025-04",
+                "price": 7960
+            },
+            {
+                "month": "2025-05",
+                "price": 7930
+            },
+            {
+                "month": "2025-06",
+                "price": 7900
+            },
+            {
+                "month": "2025-07",
+                "price": 7880
+            },
+            {
+                "month": "2025-08",
+                "price": 7860
+            },
+            {
+                "month": "2025-09",
+                "price": 7840
+            },
+            {
+                "month": "2025-10",
+                "price": 7820
+            },
+            {
+                "month": "2025-11",
+                "price": 7810
+            },
+            {
+                "month": "2025-12",
+                "price": 7800
+            }
+        ],
+        "柳北区": [
+            {
+                "month": "2025-01",
+                "price": 7480
+            },
+            {
+                "month": "2025-02",
+                "price": 7450
+            },
+            {
+                "month": "2025-03",
+                "price": 7420
+            },
+            {
+                "month": "2025-04",
+                "price": 7380
+            },
+            {
+                "month": "2025-05",
+                "price": 7350
+            },
+            {
+                "month": "2025-06",
+                "price": 7320
+            },
+            {
+                "month": "2025-07",
+                "price": 7300
+            },
+            {
+                "month": "2025-08",
+                "price": 7280
+            },
+            {
+                "month": "2025-09",
+                "price": 7260
+            },
+            {
+                "month": "2025-10",
+                "price": 7240
+            },
+            {
+                "month": "2025-11",
+                "price": 7220
+            },
+            {
+                "month": "2025-12",
+                "price": 7200
+            }
+        ],
+        "柳江区": [
+            {
+                "month": "2025-01",
+                "price": 6050
+            },
+            {
+                "month": "2025-02",
+                "price": 6020
+            },
+            {
+                "month": "2025-03",
+                "price": 5990
+            },
+            {
+                "month": "2025-04",
+                "price": 5960
+            },
+            {
+                "month": "2025-05",
+                "price": 5930
+            },
+            {
+                "month": "2025-06",
+                "price": 5900
+            },
+            {
+                "month": "2025-07",
+                "price": 5880
+            },
+            {
+                "month": "2025-08",
+                "price": 5860
+            },
+            {
+                "month": "2025-09",
+                "price": 5840
+            },
+            {
+                "month": "2025-10",
+                "price": 5820
+            },
+            {
+                "month": "2025-11",
+                "price": 5810
+            },
+            {
+                "month": "2025-12",
+                "price": 5800
+            }
+        ],
+        "柳城县": [
+            {
+                "month": "2025-01",
+                "price": 4750
+            },
+            {
+                "month": "2025-02",
+                "price": 4720
+            },
+            {
+                "month": "2025-03",
+                "price": 4690
+            },
+            {
+                "month": "2025-04",
+                "price": 4660
+            },
+            {
+                "month": "2025-05",
+                "price": 4630
+            },
+            {
+                "month": "2025-06",
+                "price": 4600
+            },
+            {
+                "month": "2025-07",
+                "price": 4580
+            },
+            {
+                "month": "2025-08",
+                "price": 4560
+            },
+            {
+                "month": "2025-09",
+                "price": 4540
+            },
+            {
+                "month": "2025-10",
+                "price": 4520
+            },
+            {
+                "month": "2025-11",
+                "price": 4510
+            },
+            {
+                "month": "2025-12",
+                "price": 4500
+            }
+        ]
+    }
+}

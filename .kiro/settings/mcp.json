@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://house_advisor:house_advisor_pwd@localhost:5434/house_advisor"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "query"
+      ]
+    }
+  }
+}

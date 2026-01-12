@@ -1,0 +1,546 @@
+{
+    "city": "南宁",
+    "update_date": "2025-01-10",
+    "houses": [
+        {
+            "house_id": "NN2025001",
+            "district": "青秀区",
+            "community": "荣和公园大道",
+            "address": "荣和公园大道3号楼2单元",
+            "price_total": 1800000,
+            "price_per_sqm": 15000,
+            "area": 120.5,
+            "layout": "3室2厅2卫",
+            "floor": "中层/32层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2018,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-15",
+            "price_history": [
+                {
+                    "date": "2024-12-15",
+                    "price": 1850000
+                },
+                {
+                    "date": "2025-01-05",
+                    "price": 1800000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025002",
+            "district": "青秀区",
+            "community": "凤岭世家",
+            "address": "凤岭世家5号楼1单元",
+            "price_total": 2200000,
+            "price_per_sqm": 17600,
+            "area": 125.0,
+            "layout": "4室2厅2卫",
+            "floor": "高层/28层",
+            "orientation": "南",
+            "decoration": "精装修",
+            "building_year": 2020,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-20",
+            "price_history": [
+                {
+                    "date": "2024-11-20",
+                    "price": 2280000
+                },
+                {
+                    "date": "2024-12-20",
+                    "price": 2200000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025003",
+            "district": "青秀区",
+            "community": "东盟商务区华润二十四城",
+            "address": "华润二十四城8号楼",
+            "price_total": 3500000,
+            "price_per_sqm": 23333,
+            "area": 150.0,
+            "layout": "4室2厅3卫",
+            "floor": "中层/35层",
+            "orientation": "南北通透",
+            "decoration": "豪装",
+            "building_year": 2019,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-10-10",
+            "price_history": [
+                {
+                    "date": "2024-10-10",
+                    "price": 3600000
+                },
+                {
+                    "date": "2024-12-01",
+                    "price": 3500000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025004",
+            "district": "良庆区",
+            "community": "五象湖壹号",
+            "address": "五象湖壹号12号楼",
+            "price_total": 1650000,
+            "price_per_sqm": 13750,
+            "area": 120.0,
+            "layout": "3室2厅2卫",
+            "floor": "低层/26层",
+            "orientation": "东南",
+            "decoration": "精装修",
+            "building_year": 2021,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-01",
+            "price_history": [
+                {
+                    "date": "2024-12-01",
+                    "price": 1700000
+                },
+                {
+                    "date": "2025-01-01",
+                    "price": 1650000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025005",
+            "district": "良庆区",
+            "community": "龙光玖珑湖",
+            "address": "龙光玖珑湖6号楼",
+            "price_total": 1450000,
+            "price_per_sqm": 12083,
+            "area": 120.0,
+            "layout": "3室2厅2卫",
+            "floor": "中层/30层",
+            "orientation": "南",
+            "decoration": "毛坯",
+            "building_year": 2022,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-15",
+            "price_history": [
+                {
+                    "date": "2024-11-15",
+                    "price": 1500000
+                },
+                {
+                    "date": "2024-12-15",
+                    "price": 1450000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025006",
+            "district": "良庆区",
+            "community": "万科金域蓝湾",
+            "address": "万科金域蓝湾3号楼",
+            "price_total": 1580000,
+            "price_per_sqm": 14363,
+            "area": 110.0,
+            "layout": "3室2厅1卫",
+            "floor": "高层/25层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2020,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-20",
+            "price_history": [
+                {
+                    "date": "2024-12-20",
+                    "price": 1580000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025007",
+            "district": "江南区",
+            "community": "保利爱琴海",
+            "address": "保利爱琴海7号楼",
+            "price_total": 1050000,
+            "price_per_sqm": 10500,
+            "area": 100.0,
+            "layout": "3室2厅1卫",
+            "floor": "中层/18层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2017,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-01",
+            "price_history": [
+                {
+                    "date": "2024-11-01",
+                    "price": 1100000
+                },
+                {
+                    "date": "2024-12-01",
+                    "price": 1050000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025008",
+            "district": "江南区",
+            "community": "江南万达广场",
+            "address": "江南万达广场2号楼",
+            "price_total": 1280000,
+            "price_per_sqm": 11636,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/28层",
+            "orientation": "东南",
+            "decoration": "精装修",
+            "building_year": 2019,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-10",
+            "price_history": [
+                {
+                    "date": "2024-12-10",
+                    "price": 1280000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025009",
+            "district": "江南区",
+            "community": "富雅国际",
+            "address": "富雅国际5号楼",
+            "price_total": 880000,
+            "price_per_sqm": 9777,
+            "area": 90.0,
+            "layout": "2室2厅1卫",
+            "floor": "低层/22层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2015,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-10-20",
+            "price_history": [
+                {
+                    "date": "2024-10-20",
+                    "price": 920000
+                },
+                {
+                    "date": "2024-12-20",
+                    "price": 880000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025010",
+            "district": "西乡塘区",
+            "community": "大学东路小区",
+            "address": "大学东路小区3栋",
+            "price_total": 780000,
+            "price_per_sqm": 8666,
+            "area": 90.0,
+            "layout": "2室2厅1卫",
+            "floor": "中层/7层",
+            "orientation": "南北通透",
+            "decoration": "简装",
+            "building_year": 2008,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-11-10",
+            "price_history": [
+                {
+                    "date": "2024-11-10",
+                    "price": 800000
+                },
+                {
+                    "date": "2024-12-10",
+                    "price": 780000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025011",
+            "district": "西乡塘区",
+            "community": "相思湖畔",
+            "address": "相思湖畔8号楼",
+            "price_total": 1150000,
+            "price_per_sqm": 10454,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/26层",
+            "orientation": "南",
+            "decoration": "精装修",
+            "building_year": 2018,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-05",
+            "price_history": [
+                {
+                    "date": "2024-12-05",
+                    "price": 1150000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025012",
+            "district": "西乡塘区",
+            "community": "广西大学教师公寓",
+            "address": "广西大学教师公寓2栋",
+            "price_total": 950000,
+            "price_per_sqm": 9500,
+            "area": 100.0,
+            "layout": "3室1厅1卫",
+            "floor": "中层/6层",
+            "orientation": "南北通透",
+            "decoration": "简装",
+            "building_year": 2005,
+            "property_type": "房改房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-10-15",
+            "price_history": [
+                {
+                    "date": "2024-10-15",
+                    "price": 980000
+                },
+                {
+                    "date": "2024-12-15",
+                    "price": 950000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025013",
+            "district": "兴宁区",
+            "community": "朝阳广场附近",
+            "address": "民主路小区5栋",
+            "price_total": 680000,
+            "price_per_sqm": 8500,
+            "area": 80.0,
+            "layout": "2室1厅1卫",
+            "floor": "低层/7层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2000,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-11-20",
+            "price_history": [
+                {
+                    "date": "2024-11-20",
+                    "price": 700000
+                },
+                {
+                    "date": "2024-12-20",
+                    "price": 680000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025014",
+            "district": "兴宁区",
+            "community": "东沟岭小区",
+            "address": "东沟岭小区12栋",
+            "price_total": 1120000,
+            "price_per_sqm": 11200,
+            "area": 100.0,
+            "layout": "3室2厅1卫",
+            "floor": "中层/18层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2016,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-01",
+            "price_history": [
+                {
+                    "date": "2024-12-01",
+                    "price": 1120000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025015",
+            "district": "兴宁区",
+            "community": "金桥花园",
+            "address": "金桥花园6号楼",
+            "price_total": 1350000,
+            "price_per_sqm": 12272,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/22层",
+            "orientation": "东南",
+            "decoration": "精装修",
+            "building_year": 2019,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-25",
+            "price_history": [
+                {
+                    "date": "2024-11-25",
+                    "price": 1380000
+                },
+                {
+                    "date": "2024-12-25",
+                    "price": 1350000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025016",
+            "district": "邕宁区",
+            "community": "龙岗新城",
+            "address": "龙岗新城3号楼",
+            "price_total": 680000,
+            "price_per_sqm": 6800,
+            "area": 100.0,
+            "layout": "3室2厅1卫",
+            "floor": "中层/18层",
+            "orientation": "南",
+            "decoration": "毛坯",
+            "building_year": 2021,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-10",
+            "price_history": [
+                {
+                    "date": "2024-12-10",
+                    "price": 680000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025017",
+            "district": "邕宁区",
+            "community": "蒲庙镇中心",
+            "address": "蒲庙镇新兴路小区",
+            "price_total": 550000,
+            "price_per_sqm": 6111,
+            "area": 90.0,
+            "layout": "2室2厅1卫",
+            "floor": "低层/6层",
+            "orientation": "南北通透",
+            "decoration": "简装",
+            "building_year": 2015,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-11-05",
+            "price_history": [
+                {
+                    "date": "2024-11-05",
+                    "price": 580000
+                },
+                {
+                    "date": "2024-12-05",
+                    "price": 550000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025018",
+            "district": "武鸣区",
+            "community": "武鸣城区",
+            "address": "武鸣城区兴武大道小区",
+            "price_total": 580000,
+            "price_per_sqm": 5800,
+            "area": 100.0,
+            "layout": "3室2厅1卫",
+            "floor": "中层/12层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2018,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-15",
+            "price_history": [
+                {
+                    "date": "2024-12-15",
+                    "price": 580000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025019",
+            "district": "武鸣区",
+            "community": "武鸣碧桂园",
+            "address": "武鸣碧桂园5号楼",
+            "price_total": 720000,
+            "price_per_sqm": 6545,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/20层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2020,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-20",
+            "price_history": [
+                {
+                    "date": "2024-11-20",
+                    "price": 750000
+                },
+                {
+                    "date": "2024-12-20",
+                    "price": 720000
+                }
+            ]
+        },
+        {
+            "house_id": "NN2025020",
+            "district": "青秀区",
+            "community": "凤岭北路学区房",
+            "address": "凤岭北路学区房2号楼",
+            "price_total": 2800000,
+            "price_per_sqm": 20000,
+            "area": 140.0,
+            "layout": "4室2厅2卫",
+            "floor": "中层/30层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2017,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-10-01",
+            "price_history": [
+                {
+                    "date": "2024-10-01",
+                    "price": 2900000
+                },
+                {
+                    "date": "2024-11-01",
+                    "price": 2850000
+                },
+                {
+                    "date": "2024-12-01",
+                    "price": 2800000
+                }
+            ]
+        }
+    ]
+}

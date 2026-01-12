@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: house_advisor_postgres
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: house_advisor
+      POSTGRES_PASSWORD: house_advisor_pwd
+      POSTGRES_DB: house_advisor
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U house_advisor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    container_name: house_advisor_redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  chroma:
+    image: chromadb/chroma
+    container_name: house_advisor_chroma
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+
+volumes:
+  postgres_data:
+  redis_data:
+  chroma_data:

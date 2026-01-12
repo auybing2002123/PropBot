@@ -1,0 +1,410 @@
+{
+    "city": "柳州",
+    "update_date": "2025-01-10",
+    "houses": [
+        {
+            "house_id": "LZ2025001",
+            "district": "城中区",
+            "community": "柳州万达广场",
+            "address": "柳州万达广场3号楼",
+            "price_total": 1150000,
+            "price_per_sqm": 10454,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/28层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2019,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-01",
+            "price_history": [
+                {
+                    "date": "2024-12-01",
+                    "price": 1180000
+                },
+                {
+                    "date": "2025-01-01",
+                    "price": 1150000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025002",
+            "district": "城中区",
+            "community": "河东路小区",
+            "address": "河东路小区5栋",
+            "price_total": 850000,
+            "price_per_sqm": 8500,
+            "area": 100.0,
+            "layout": "3室2厅1卫",
+            "floor": "中层/7层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2010,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-11-15",
+            "price_history": [
+                {
+                    "date": "2024-11-15",
+                    "price": 880000
+                },
+                {
+                    "date": "2024-12-15",
+                    "price": 850000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025003",
+            "district": "城中区",
+            "community": "柳侯公园旁",
+            "address": "柳侯公园旁小区2号楼",
+            "price_total": 1280000,
+            "price_per_sqm": 11636,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "中层/22层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2018,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-10",
+            "price_history": [
+                {
+                    "date": "2024-12-10",
+                    "price": 1280000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025004",
+            "district": "鱼峰区",
+            "community": "鱼峰山庄",
+            "address": "鱼峰山庄6号楼",
+            "price_total": 920000,
+            "price_per_sqm": 8363,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/25层",
+            "orientation": "东南",
+            "decoration": "精装修",
+            "building_year": 2020,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-20",
+            "price_history": [
+                {
+                    "date": "2024-11-20",
+                    "price": 950000
+                },
+                {
+                    "date": "2024-12-20",
+                    "price": 920000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025005",
+            "district": "鱼峰区",
+            "community": "荣军路小区",
+            "address": "荣军路小区3栋",
+            "price_total": 680000,
+            "price_per_sqm": 7555,
+            "area": 90.0,
+            "layout": "2室2厅1卫",
+            "floor": "低层/6层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2008,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-10-25",
+            "price_history": [
+                {
+                    "date": "2024-10-25",
+                    "price": 700000
+                },
+                {
+                    "date": "2024-12-25",
+                    "price": 680000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025006",
+            "district": "鱼峰区",
+            "community": "柳东新区碧桂园",
+            "address": "柳东新区碧桂园8号楼",
+            "price_total": 1050000,
+            "price_per_sqm": 8750,
+            "area": 120.0,
+            "layout": "4室2厅2卫",
+            "floor": "中层/26层",
+            "orientation": "南北通透",
+            "decoration": "精装修",
+            "building_year": 2021,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-05",
+            "price_history": [
+                {
+                    "date": "2024-12-05",
+                    "price": 1050000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025007",
+            "district": "柳南区",
+            "community": "柳南万达",
+            "address": "柳南万达2号楼",
+            "price_total": 880000,
+            "price_per_sqm": 8000,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/28层",
+            "orientation": "南",
+            "decoration": "精装修",
+            "building_year": 2019,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-10",
+            "price_history": [
+                {
+                    "date": "2024-11-10",
+                    "price": 900000
+                },
+                {
+                    "date": "2024-12-10",
+                    "price": 880000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025008",
+            "district": "柳南区",
+            "community": "航银路小区",
+            "address": "航银路小区7栋",
+            "price_total": 620000,
+            "price_per_sqm": 6888,
+            "area": 90.0,
+            "layout": "2室2厅1卫",
+            "floor": "中层/7层",
+            "orientation": "南北通透",
+            "decoration": "简装",
+            "building_year": 2005,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-10-15",
+            "price_history": [
+                {
+                    "date": "2024-10-15",
+                    "price": 650000
+                },
+                {
+                    "date": "2024-12-15",
+                    "price": 620000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025009",
+            "district": "柳北区",
+            "community": "柳北恒大城",
+            "address": "柳北恒大城5号楼",
+            "price_total": 780000,
+            "price_per_sqm": 7090,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "中层/25层",
+            "orientation": "南",
+            "decoration": "精装修",
+            "building_year": 2020,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-01",
+            "price_history": [
+                {
+                    "date": "2024-12-01",
+                    "price": 800000
+                },
+                {
+                    "date": "2025-01-01",
+                    "price": 780000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025010",
+            "district": "柳北区",
+            "community": "跃进路小区",
+            "address": "跃进路小区2栋",
+            "price_total": 520000,
+            "price_per_sqm": 5777,
+            "area": 90.0,
+            "layout": "2室1厅1卫",
+            "floor": "低层/6层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2000,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-11-05",
+            "price_history": [
+                {
+                    "date": "2024-11-05",
+                    "price": 550000
+                },
+                {
+                    "date": "2024-12-05",
+                    "price": 520000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025011",
+            "district": "柳北区",
+            "community": "北雀路小区",
+            "address": "北雀路小区8栋",
+            "price_total": 680000,
+            "price_per_sqm": 6800,
+            "area": 100.0,
+            "layout": "3室2厅1卫",
+            "floor": "中层/18层",
+            "orientation": "南北通透",
+            "decoration": "简装",
+            "building_year": 2015,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-15",
+            "price_history": [
+                {
+                    "date": "2024-12-15",
+                    "price": 680000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025012",
+            "district": "柳江区",
+            "community": "柳江碧桂园",
+            "address": "柳江碧桂园3号楼",
+            "price_total": 580000,
+            "price_per_sqm": 5272,
+            "area": 110.0,
+            "layout": "3室2厅2卫",
+            "floor": "高层/22层",
+            "orientation": "南",
+            "decoration": "精装修",
+            "building_year": 2021,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-11-25",
+            "price_history": [
+                {
+                    "date": "2024-11-25",
+                    "price": 600000
+                },
+                {
+                    "date": "2024-12-25",
+                    "price": 580000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025013",
+            "district": "柳江区",
+            "community": "拉堡镇中心",
+            "address": "拉堡镇新兴路小区",
+            "price_total": 420000,
+            "price_per_sqm": 4666,
+            "area": 90.0,
+            "layout": "2室2厅1卫",
+            "floor": "低层/6层",
+            "orientation": "南北通透",
+            "decoration": "简装",
+            "building_year": 2012,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-10-20",
+            "price_history": [
+                {
+                    "date": "2024-10-20",
+                    "price": 450000
+                },
+                {
+                    "date": "2024-12-20",
+                    "price": 420000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025014",
+            "district": "柳城县",
+            "community": "柳城县城中心",
+            "address": "柳城县城中心小区",
+            "price_total": 380000,
+            "price_per_sqm": 4222,
+            "area": 90.0,
+            "layout": "2室2厅1卫",
+            "floor": "中层/7层",
+            "orientation": "南",
+            "decoration": "简装",
+            "building_year": 2015,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": false,
+            "listing_date": "2024-11-10",
+            "price_history": [
+                {
+                    "date": "2024-11-10",
+                    "price": 400000
+                },
+                {
+                    "date": "2024-12-10",
+                    "price": 380000
+                }
+            ]
+        },
+        {
+            "house_id": "LZ2025015",
+            "district": "柳城县",
+            "community": "柳城新区",
+            "address": "柳城新区2号楼",
+            "price_total": 480000,
+            "price_per_sqm": 4363,
+            "area": 110.0,
+            "layout": "3室2厅1卫",
+            "floor": "高层/18层",
+            "orientation": "南北通透",
+            "decoration": "毛坯",
+            "building_year": 2020,
+            "property_type": "商品房",
+            "property_rights": "70年产权",
+            "elevator": true,
+            "listing_date": "2024-12-20",
+            "price_history": [
+                {
+                    "date": "2024-12-20",
+                    "price": 480000
+                }
+            ]
+        }
+    ]
+}
