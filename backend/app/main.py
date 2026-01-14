@@ -10,7 +10,7 @@ from fastapi.exceptions import RequestValidationError
 
 from app.config.settings import get_settings
 from app.db.database import Database
-from app.api import health, chat, calculator, conversation, auth
+from app.api import health, chat, calculator, conversation, auth, favorite
 from app.utils.logger import setup_logging, get_logger
 from app.utils.exceptions import BaseAppException, LLMException, ToolException
 
@@ -90,6 +90,7 @@ app.include_router(chat.router, prefix=settings.API_PREFIX)
 app.include_router(calculator.router, prefix=settings.API_PREFIX)
 app.include_router(conversation.router, prefix=settings.API_PREFIX)
 app.include_router(auth.router, prefix=settings.API_PREFIX)
+app.include_router(favorite.router, prefix=settings.API_PREFIX)
 
 
 # 注册异常处理器

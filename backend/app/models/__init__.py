@@ -5,6 +5,7 @@ from app.models.base import Base, TimestampMixin, generate_uuid
 from app.models.user import User
 from app.models.conversation import Conversation
 from app.models.message import Message
+from app.models.favorite import Favorite
 
 __all__ = [
     "Base",
@@ -13,4 +14,5 @@ __all__ = [
     "User",
     "Conversation",
     "Message",
+    "Favorite",
 ]

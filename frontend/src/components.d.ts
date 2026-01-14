@@ -16,6 +16,8 @@ declare module 'vue' {
     DataCard: typeof import('./components/market/DataCard.vue')['default']
     DistrictTable: typeof import('./components/market/DistrictTable.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCollapse: typeof import('element-plus/es')['ElCollapse']
+    ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']
@@ -36,6 +38,7 @@ declare module 'vue' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    FavoritePanel: typeof import('./components/favorite/FavoritePanel.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     LoanForm: typeof import('./components/calculator/LoanForm.vue')['default']
     PolicyCard: typeof import('./components/common/PolicyCard.vue')['default']
@@ -46,6 +49,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TaxForm: typeof import('./components/calculator/TaxForm.vue')['default']
     ThinkingProcess: typeof import('./components/chat/ThinkingProcess.vue')['default']
+    ToolPanel: typeof import('./components/layout/ToolPanel.vue')['default']
     TotalCostForm: typeof import('./components/calculator/TotalCostForm.vue')['default']
   }
 }

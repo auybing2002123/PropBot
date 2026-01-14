@@ -1,13 +1,15 @@
 <script setup lang="ts">
 /**
  * 整体布局组件
- * ChatGPT 风格：左侧边栏 + 右侧内容区
+ * ChatGPT 风格：左侧边栏 + 右侧内容区 + 右侧浮动工具栏
  * 桌面端：侧边栏默认展开，通过宽度过渡实现流畅动画
  * 手机端：侧边栏默认隐藏，通过抽屉展示
  */
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import AppHeader from './AppHeader.vue'
 import AppSidebar from './AppSidebar.vue'
+import ToolPanel from './ToolPanel.vue'
+import FavoritePanel from '@/components/favorite/FavoritePanel.vue'
 
 // 移动端断点
 const MOBILE_BREAKPOINT = 768
@@ -126,6 +128,12 @@ onUnmounted(() => {
         <router-view />
       </main>
     </div>
+    
+    <!-- 右侧浮动工具栏（自管理状态，悬停展开） -->
+    <ToolPanel />
+    
+    <!-- 右下角收藏面板 -->
+    <FavoritePanel />
   </div>
 </template>
 

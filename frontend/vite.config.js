@@ -33,6 +33,11 @@ export default defineConfig({
             '.cpolar.cn',
             '.r37.cpolar.top'
         ],
+        // cpolar 穿透时 WebSocket 可能不稳定，忽略 HMR 错误
+        hmr: {
+            clientPort: 443,  // cpolar https 端口
+            protocol: 'wss'   // 使用安全 WebSocket
+        },
         proxy: {
             '/api': {
                 target: 'http://localhost:8080',

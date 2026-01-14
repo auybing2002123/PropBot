@@ -2,6 +2,8 @@
 /**
  * 角色消息组件
  * 支持折叠展示思考过程（包含专家分析）
+ * 支持解析和渲染推荐问题
+ * 支持关注功能
  */
 import { computed, ref, watch, onUnmounted, onMounted } from 'vue'
 import { marked } from 'marked'
@@ -14,15 +16,22 @@ import {
   Setting,
   Search,
   DataAnalysis,
-  User
+  User,
+  Star,
+  StarFilled
 } from '@element-plus/icons-vue'
 import { useChatStore } from '@/stores/chat'
+import { useFavoriteStore } from '@/stores/favorite'
 import type { RoleId, ExpertAnalysis, ThinkingStep } from '@/types/chat'
 
 const chatStore = useChatStore()
+const favoriteStore = useFavoriteStore()
 
 // Props
 const props = defineProps<{
+  messageId?: string           // 消息ID（用于收藏）
+  conversationId?: string      // 对话ID（用于跳转）
+  userQuestion?: string        // 用户问题（用于收藏显示）
   roleId?: RoleId
   roleName?: string
   roleIcon?: string
@@ -42,6 +51,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'toggleExpert'): void
   (e: 'toggleThinking'): void
+  (e: 'sendQuestion', question: string): void
 }>()
 
 // 专家分析展开状态（每个专家独立控制）
@@ -111,8 +121,63 @@ function toggleExpertExpand(stepId: string) {
 // 渲染 Markdown 内容
 const renderedContent = computed(() => {
   if (!props.content) return ''
-  return marked(props.content, { breaks: true })
+  // 移除推荐问题部分后再渲染
+  const contentWithoutQuestions = props.content.replace(/【推荐问题】[\s\S]*$/, '').trim()
+  return marked(contentWithoutQuestions, { breaks: true })
 })
+
+// 解析推荐问题
+const recommendQuestions = computed(() => {
+  if (!props.content || props.loading) return []
+  
+  const match = props.content.match(/【推荐问题】\n?([\s\S]*?)$/)
+  if (!match) return []
+  
+  const questionsText = match[1]
+  const questions = questionsText
+    .split('\n')
+    .map(q => q.replace(/^[-\d.、·•]\s*/, '').trim())
+    .filter(q => q && q.length > 0 && q.length < 100)  // 过滤空行和过长的内容
+  
+  return questions.slice(0, 5)  // 最多显示5个
+})
+
+// 点击推荐问题
+function handleQuestionClick(question: string) {
+  emit('sendQuestion', question)
+}
+
+// 是否已收藏
+const isFavorited = computed(() => {
+  if (!props.messageId) return false
+  return favoriteStore.isFavorited(props.messageId)
+})
+
+// 收藏/取消收藏
+async function handleFavorite() {
+  if (!props.content || props.loading) return
+  
+  // 如果已收藏，则取消收藏
+  if (isFavorited.value && props.messageId) {
+    // 找到对应的收藏记录
+    const favorite = favoriteStore.favorites.find(f => f.message_id === props.messageId)
+    if (favorite) {
+      await favoriteStore.remove(favorite.id)
+    }
+    return
+  }
+  
+  // 否则添加收藏
+  // 移除推荐问题部分
+  const cleanAnswer = props.content.replace(/【推荐问题】[\s\S]*$/, '').trim()
+  
+  await favoriteStore.add({
+    messageId: props.messageId,
+    conversationId: props.conversationId,
+    question: props.userQuestion || '未知问题',
+    answer: cleanAnswer
+  })
+}
 
 // 渲染专家分析内容
 function renderExpertContent(content: string): string {
@@ -216,24 +281,40 @@ function getExpertSummary(content: string): string {
     <div class="role-content">
       <!-- 思考过程（嵌入在内容上方） -->
       <div v-if="hasThinkingSteps" class="thinking-section">
-        <div 
-          class="thinking-toggle" 
-          @click="emit('toggleThinking')"
-        >
-          <el-icon 
-            :size="14" 
-            class="thinking-icon"
-            :class="{ 'is-loading': isThinking }"
+        <div class="thinking-header">
+          <div 
+            class="thinking-toggle" 
+            @click="emit('toggleThinking')"
           >
-            <Loading v-if="isThinking" />
-            <Check v-else />
-          </el-icon>
-          <span class="thinking-title">
-            {{ isThinking ? `已深度思考 (用时${thinkingDuration}秒)` : `已深度思考 (用时${thinkingDuration}秒)` }}
-          </span>
-          <el-icon :size="12" class="expand-icon">
-            <component :is="showThinking ? ArrowUp : ArrowDown" />
-          </el-icon>
+            <el-icon 
+              :size="14" 
+              class="thinking-icon"
+              :class="{ 'is-loading': isThinking }"
+            >
+              <Loading v-if="isThinking" />
+              <Check v-else />
+            </el-icon>
+            <span class="thinking-title">
+              {{ isThinking ? `已深度思考 (用时${thinkingDuration}秒)` : `已深度思考 (用时${thinkingDuration}秒)` }}
+            </span>
+            <el-icon :size="12" class="expand-icon">
+              <component :is="showThinking ? ArrowUp : ArrowDown" />
+            </el-icon>
+          </div>
+          
+          <!-- 关注按钮（放在思考链右侧） -->
+          <div 
+            v-if="content && !loading" 
+            class="favorite-btn"
+            :class="{ favorited: isFavorited }"
+            :title="isFavorited ? '已关注' : '关注'"
+            @click.stop="handleFavorite"
+          >
+            <el-icon :size="16">
+              <StarFilled v-if="isFavorited" />
+              <Star v-else />
+            </el-icon>
+          </div>
         </div>
         
         <!-- 折叠时显示最新一条步骤预览 -->
@@ -311,7 +392,37 @@ function getExpertSummary(content: string): string {
         <span class="loading-text">思考中...</span>
       </template>
       <template v-else-if="content">
+        <!-- 没有思考过程时，关注按钮放在内容右上角 -->
+        <div v-if="!hasThinkingSteps" class="content-header">
+          <div 
+            class="favorite-btn inline"
+            :class="{ favorited: isFavorited }"
+            :title="isFavorited ? '已关注' : '关注'"
+            @click="handleFavorite"
+          >
+            <el-icon :size="16">
+              <StarFilled v-if="isFavorited" />
+              <Star v-else />
+            </el-icon>
+          </div>
+        </div>
         <div v-html="renderedContent" class="markdown-content"></div>
+        
+        <!-- 推荐问题 -->
+        <div v-if="recommendQuestions.length > 0" class="recommend-questions">
+          <div class="recommend-label">您可能还想了解：</div>
+          <div class="recommend-list">
+            <el-button
+              v-for="(q, index) in recommendQuestions"
+              :key="index"
+              size="small"
+              class="recommend-btn"
+              @click="handleQuestionClick(q)"
+            >
+              {{ q }}
+            </el-button>
+          </div>
+        </div>
       </template>
     </div>
   </div>
@@ -324,6 +435,12 @@ function getExpertSummary(content: string): string {
   padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   max-width: 85%;
+  position: relative;
+  
+  // 鼠标悬停时显示内联收藏按钮
+  &:hover .content-header .favorite-btn.inline {
+    opacity: 1;
+  }
   
   .role-content {
     color: #333;
@@ -334,18 +451,74 @@ function getExpertSummary(content: string): string {
       color: #999;
     }
     
+    // 没有思考过程时的内容头部
+    .content-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 4px;
+      
+      .favorite-btn.inline.favorited {
+        opacity: 1;
+      }
+    }
+    
+    // 收藏按钮样式
+    .favorite-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #ccc;
+      transition: all 0.2s;
+      
+      &:hover {
+        background: #f5f5f5;
+        color: #faad14;
+      }
+      
+      &.favorited {
+        color: #faad14;
+      }
+      
+      &.inline {
+        opacity: 0;
+      }
+    }
+    
     // 思考过程样式
     .thinking-section {
       margin-bottom: 12px;
       padding-bottom: 12px;
       border-bottom: 1px dashed #e8e8e8;
       
+      .thinking-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        .favorite-btn {
+          opacity: 0;
+          margin-left: 8px;
+        }
+        
+        &:hover .favorite-btn {
+          opacity: 1;
+        }
+        
+        .favorite-btn.favorited {
+          opacity: 1;
+        }
+      }
+      
       .thinking-toggle {
         display: flex;
         align-items: center;
         gap: 6px;
         cursor: pointer;
-        padding: 4px 0;
+        flex: 1;
         
         &:hover {
           .thinking-title {
@@ -369,7 +542,6 @@ function getExpertSummary(content: string): string {
         
         .expand-icon {
           color: #999;
-          margin-left: auto;
         }
       }
       
@@ -565,6 +737,45 @@ function getExpertSummary(content: string): string {
   
   :deep(h3) {
     font-size: 14px;
+  }
+}
+
+// 推荐问题样式
+.recommend-questions {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed #e8e8e8;
+  
+  .recommend-label {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  
+  .recommend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .recommend-btn {
+    font-size: 12px;
+    color: #1890ff;
+    background: #f0f7ff;
+    border: 1px solid #d6e8fc;
+    border-radius: 16px;
+    padding: 6px 14px;
+    height: auto;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.4;
+    margin-left: 0 !important;
+    
+    &:hover {
+      background: #e6f4ff;
+      border-color: #1890ff;
+    }
   }
 }
 

@@ -14,14 +14,15 @@ const activeTab = ref('loan')
 <template>
   <div class="calculator-view">
     <div class="calculator-container">
+      <!-- 使用 v-show 保持组件实例，避免切换时重新渲染 -->
       <el-tabs v-model="activeTab" class="calculator-tabs">
-        <el-tab-pane label="贷款计算" name="loan">
+        <el-tab-pane label="贷款计算" name="loan" lazy>
           <LoanForm />
         </el-tab-pane>
-        <el-tab-pane label="税费计算" name="tax">
+        <el-tab-pane label="税费计算" name="tax" lazy>
           <TaxForm />
         </el-tab-pane>
-        <el-tab-pane label="总成本" name="total">
+        <el-tab-pane label="总成本" name="total" lazy>
           <TotalCostForm />
         </el-tab-pane>
       </el-tabs>

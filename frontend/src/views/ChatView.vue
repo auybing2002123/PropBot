@@ -8,12 +8,6 @@ import { useChatStore } from '@/stores/chat'
 import { useAuthStore } from '@/stores/auth'
 import RoleMessage from '@/components/chat/RoleMessage.vue'
 import ChatInput from '@/components/chat/ChatInput.vue'
-import { 
-  Coin, 
-  Document, 
-  TrendCharts, 
-  QuestionFilled 
-} from '@element-plus/icons-vue'
 
 const chatStore = useChatStore()
 const authStore = useAuthStore()
@@ -22,32 +16,17 @@ const messageListRef = ref<HTMLElement | null>(null)
 // 用户是否手动滚动（用于判断是否暂停自动滚动）
 const userScrolledUp = ref(false)
 
-// 快捷功能卡片
-const quickCards = [
-  { 
-    icon: Coin, 
-    title: '贷款计算', 
-    desc: '计算月供、利息、还款方案',
-    query: '我想买一套100万的房子，首付30%，贷款30年，帮我算一下月供是多少？'
-  },
-  { 
-    icon: Document, 
-    title: '政策解读', 
-    desc: '限购、公积金、税费政策',
-    query: '南宁现在的限购政策是什么？外地人可以买房吗？'
-  },
-  { 
-    icon: TrendCharts, 
-    title: '市场分析', 
-    desc: '房价走势、区域对比',
-    query: '南宁目前的房价走势如何？哪个区域比较有投资价值？'
-  },
-  { 
-    icon: QuestionFilled, 
-    title: '购房咨询', 
-    desc: '首套房、二手房、流程指南',
-    query: '我是首次购房，需要准备哪些材料？购房流程是怎样的？'
-  }
+// 引导问题列表（具体问题，点击直接发送）
+const suggestQuestions = [
+  '100万的房子首付30%月供多少？',
+  '南宁外地人可以买几套房？',
+  '青秀区和良庆区哪个更值得买？',
+  '公积金贷款最多能贷多少？',
+  '买二手房需要交哪些税费？',
+  '首套房契税怎么算？',
+  '南宁最新的购房政策有哪些？',
+  '月收入1万能买多少钱的房？',
+  '等额本息和等额本金哪个划算？'
 ]
 
 // 发送消息
@@ -57,9 +36,24 @@ async function handleSend(content: string) {
   scrollToBottom()
 }
 
-// 点击快捷卡片
-function handleQuickCard(query: string) {
-  handleSend(query)
+// 获取某条 AI 消息之前的用户问题
+function getPreviousUserQuestion(messageId: string): string {
+  const messages = chatStore.messages
+  const index = messages.findIndex(m => m.id === messageId)
+  if (index <= 0) return ''
+  
+  // 向前查找最近的用户消息
+  for (let i = index - 1; i >= 0; i--) {
+    if (messages[i].role === 'user') {
+      return messages[i].content
+    }
+  }
+  return ''
+}
+
+// 点击引导问题
+function handleSuggestQuestion(question: string) {
+  handleSend(question)
 }
 
 // 滚动到底部
@@ -132,21 +126,15 @@ onUnmounted(() => {
           <h1 class="welcome-title">Hi，{{ authStore.nickname || '欢迎使用' }}</h1>
           <p class="welcome-subtitle">我是你的购房决策助手，有什么可以帮你的？</p>
           
-          <!-- 快捷功能卡片 -->
-          <div class="quick-cards">
+          <!-- 引导问题标签 -->
+          <div class="suggest-questions">
             <div 
-              v-for="card in quickCards" 
-              :key="card.title"
-              class="quick-card"
-              @click="handleQuickCard(card.query)"
+              v-for="question in suggestQuestions" 
+              :key="question"
+              class="suggest-tag"
+              @click="handleSuggestQuestion(question)"
             >
-              <el-icon class="card-icon" :size="20">
-                <component :is="card.icon" />
-              </el-icon>
-              <div class="card-content">
-                <div class="card-title">{{ card.title }}</div>
-                <div class="card-desc">{{ card.desc }}</div>
-              </div>
+              {{ question }}
             </div>
           </div>
         </div>
@@ -168,6 +156,9 @@ onUnmounted(() => {
               <!-- AI 角色消息 -->
               <RoleMessage
                 v-else
+                :message-id="msg.id"
+                :conversation-id="chatStore.conversationId || undefined"
+                :user-question="getPreviousUserQuestion(msg.id)"
                 :role-id="msg.roleId"
                 :role-name="msg.roleName"
                 :role-icon="msg.roleIcon"
@@ -182,6 +173,7 @@ onUnmounted(() => {
                 :show-thinking="msg.showThinking"
                 @toggle-expert="chatStore.toggleExpertAnalysis(msg.id)"
                 @toggle-thinking="chatStore.toggleMessageThinking(msg.id)"
+                @send-question="handleSend"
               />
             </div>
           </template>
@@ -245,56 +237,27 @@ onUnmounted(() => {
   }
 }
 
-// 快捷功能卡片
-.quick-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
+// 引导问题标签
+.suggest-questions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 650px;
+  margin: 0 auto;
 }
 
-.quick-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+.suggest-tag {
+  padding: 10px 18px;
+  background: #f0f0f0;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #333;
   cursor: pointer;
   transition: all 0.2s;
-  text-align: left;
-
+  
   &:hover {
-    border-color: #1890ff;
-    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.1);
-    transform: translateY(-2px);
-  }
-
-  .card-icon {
-    color: #1890ff;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .card-content {
-    flex: 1;
-    min-width: 0;
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: #333;
-      margin-bottom: 4px;
-    }
-
-    .card-desc {
-      font-size: 12px;
-      color: #999;
-    }
+    background: #e0e0e0;
   }
 }
 
