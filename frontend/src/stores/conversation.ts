@@ -87,7 +87,9 @@ export const useConversationStore = defineStore('conversation', () => {
                     timestamp: new Date(msg.created_at).getTime(),
                     isSummary: msg.is_summary,
                     thinkingSteps: msg.thinking_steps || [],
-                    showThinking: false
+                    showThinking: false,
+                    // 从 metadata 中读取引用数据
+                    references: msg.metadata?.references || undefined
                 }))
 
                 chatStore.loadConversation(convId, messages)

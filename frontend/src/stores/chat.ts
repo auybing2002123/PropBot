@@ -171,7 +171,7 @@ export const useChatStore = defineStore('chat', () => {
             loading: true,
             timestamp: Date.now(),
             thinkingSteps: [],
-            showThinking: false
+            showThinking: true  // 默认展开
         })
         currentRoleMessageId.value = msgId
 
@@ -238,7 +238,7 @@ export const useChatStore = defineStore('chat', () => {
             case 'thinking_start':
                 // 消息框已在 send() 中创建，这里只更新状态
                 isThinking.value = true
-                showThinking.value = false  // 默认折叠思考过程
+                showThinking.value = true  // 默认展开思考过程
                 break
 
             case 'thinking_step':
@@ -504,6 +504,11 @@ export const useChatStore = defineStore('chat', () => {
 
                 if (currentRoleMessageId.value) {
                     const msg = messages.value.find(m => m.id === currentRoleMessageId.value)
+
+                    // 处理引用数据
+                    if (event.references && msg) {
+                        msg.references = event.references
+                    }
 
                     // 如果消息还是 loading 状态且没有内容，说明流式输出可能失败了
                     // 尝试从 pendingExpertAnalysis 恢复

@@ -7,6 +7,7 @@
  */
 import { computed, ref, watch, onUnmounted, onMounted } from 'vue'
 import { marked } from 'marked'
+import { ElMessage } from 'element-plus'
 import { 
   Document, 
   Loading,
@@ -18,11 +19,14 @@ import {
   DataAnalysis,
   User,
   Star,
-  StarFilled
+  StarFilled,
+  CopyDocument,
+  Share
 } from '@element-plus/icons-vue'
 import { useChatStore } from '@/stores/chat'
 import { useFavoriteStore } from '@/stores/favorite'
-import type { RoleId, ExpertAnalysis, ThinkingStep } from '@/types/chat'
+import ReferenceContent from './ReferenceContent.vue'
+import type { RoleId, ExpertAnalysis, ThinkingStep, Reference } from '@/types/chat'
 
 const chatStore = useChatStore()
 const favoriteStore = useFavoriteStore()
@@ -45,6 +49,8 @@ const props = defineProps<{
   thinkingSteps?: ThinkingStep[]
   isThinking?: boolean
   showThinking?: boolean
+  // 引用来源相关
+  references?: Reference[]
 }>()
 
 // Emits
@@ -118,12 +124,23 @@ function toggleExpertExpand(stepId: string) {
   }
 }
 
-// 渲染 Markdown 内容
+// 渲染 Markdown 内容（不含引用标记的处理）
 const renderedContent = computed(() => {
   if (!props.content) return ''
   // 移除推荐问题部分后再渲染
   const contentWithoutQuestions = props.content.replace(/【推荐问题】[\s\S]*$/, '').trim()
   return marked(contentWithoutQuestions, { breaks: true })
+})
+
+// 是否有引用
+const hasReferences = computed(() => {
+  return props.references && props.references.length > 0
+})
+
+// 获取不含推荐问题的内容（用于引用渲染）
+const contentWithoutQuestions = computed(() => {
+  if (!props.content) return ''
+  return props.content.replace(/【推荐问题】[\s\S]*$/, '').trim()
 })
 
 // 解析推荐问题
@@ -152,6 +169,21 @@ const isFavorited = computed(() => {
   if (!props.messageId) return false
   return favoriteStore.isFavorited(props.messageId)
 })
+
+// 复制内容到剪贴板
+async function handleCopy() {
+  if (!props.content) return
+  
+  // 移除推荐问题部分，获取纯文本
+  const cleanContent = props.content.replace(/【推荐问题】[\s\S]*$/, '').trim()
+  
+  try {
+    await navigator.clipboard.writeText(cleanContent)
+    ElMessage.success('已复制到剪贴板')
+  } catch (err) {
+    ElMessage.error('复制失败')
+  }
+}
 
 // 收藏/取消收藏
 async function handleFavorite() {
@@ -301,20 +333,6 @@ function getExpertSummary(content: string): string {
               <component :is="showThinking ? ArrowUp : ArrowDown" />
             </el-icon>
           </div>
-          
-          <!-- 关注按钮（放在思考链右侧） -->
-          <div 
-            v-if="content && !loading" 
-            class="favorite-btn"
-            :class="{ favorited: isFavorited }"
-            :title="isFavorited ? '已关注' : '关注'"
-            @click.stop="handleFavorite"
-          >
-            <el-icon :size="16">
-              <StarFilled v-if="isFavorited" />
-              <Star v-else />
-            </el-icon>
-          </div>
         </div>
         
         <!-- 折叠时显示最新一条步骤预览 -->
@@ -392,21 +410,15 @@ function getExpertSummary(content: string): string {
         <span class="loading-text">思考中...</span>
       </template>
       <template v-else-if="content">
-        <!-- 没有思考过程时，关注按钮放在内容右上角 -->
-        <div v-if="!hasThinkingSteps" class="content-header">
-          <div 
-            class="favorite-btn inline"
-            :class="{ favorited: isFavorited }"
-            :title="isFavorited ? '已关注' : '关注'"
-            @click="handleFavorite"
-          >
-            <el-icon :size="16">
-              <StarFilled v-if="isFavorited" />
-              <Star v-else />
-            </el-icon>
-          </div>
+        <!-- 有引用时使用 ReferenceContent 组件渲染 -->
+        <div v-if="hasReferences" class="markdown-content">
+          <ReferenceContent 
+            :content="contentWithoutQuestions" 
+            :references="references"
+          />
         </div>
-        <div v-html="renderedContent" class="markdown-content"></div>
+        <!-- 无引用时直接渲染 Markdown -->
+        <div v-else v-html="renderedContent" class="markdown-content"></div>
         
         <!-- 推荐问题 -->
         <div v-if="recommendQuestions.length > 0" class="recommend-questions">
@@ -425,67 +437,80 @@ function getExpertSummary(content: string): string {
         </div>
       </template>
     </div>
+    
+    <!-- 操作按钮栏（放在卡片外面） -->
+    <div v-if="content && !loading" class="action-bar">
+      <div 
+        class="action-btn"
+        title="复制"
+        @click="handleCopy"
+      >
+        <el-icon :size="16"><CopyDocument /></el-icon>
+      </div>
+      <div 
+        class="action-btn"
+        :class="{ active: isFavorited }"
+        :title="isFavorited ? '已收藏' : '收藏'"
+        @click="handleFavorite"
+      >
+        <el-icon :size="16">
+          <StarFilled v-if="isFavorited" />
+          <Star v-else />
+        </el-icon>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .role-message {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   max-width: 85%;
-  position: relative;
   
-  // 鼠标悬停时显示内联收藏按钮
-  &:hover .content-header .favorite-btn.inline {
-    opacity: 1;
+  // 操作按钮栏（在卡片外面）
+  .action-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    padding-left: 4px;
+  }
+  
+  .action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #999;
+    transition: all 0.2s;
+    
+    &:hover {
+      background: #f5f5f5;
+      color: #666;
+    }
+    
+    &.active {
+      color: #faad14;
+      
+      &:hover {
+        color: #d48806;
+      }
+    }
   }
   
   .role-content {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     color: #333;
     font-size: 14px;
     line-height: 1.6;
     
     .loading-text {
       color: #999;
-    }
-    
-    // 没有思考过程时的内容头部
-    .content-header {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 4px;
-      
-      .favorite-btn.inline.favorited {
-        opacity: 1;
-      }
-    }
-    
-    // 收藏按钮样式
-    .favorite-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #ccc;
-      transition: all 0.2s;
-      
-      &:hover {
-        background: #f5f5f5;
-        color: #faad14;
-      }
-      
-      &.favorited {
-        color: #faad14;
-      }
-      
-      &.inline {
-        opacity: 0;
-      }
     }
     
     // 思考过程样式
@@ -497,20 +522,6 @@ function getExpertSummary(content: string): string {
       .thinking-header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        
-        .favorite-btn {
-          opacity: 0;
-          margin-left: 8px;
-        }
-        
-        &:hover .favorite-btn {
-          opacity: 1;
-        }
-        
-        .favorite-btn.favorited {
-          opacity: 1;
-        }
       }
       
       .thinking-toggle {

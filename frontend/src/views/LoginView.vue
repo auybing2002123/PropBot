@@ -118,8 +118,8 @@ function handleSubmit() {
         <div class="login-container">
             <!-- Logo 区域 -->
             <div class="login-header">
-                <h1 class="title">购房决策智能助手</h1>
-                <p class="subtitle">智能分析，助您做出明智的购房决策</p>
+                <h1 class="title">购房AI助手</h1>
+                <p class="subtitle">五个智能工具，为您提供购房全链条资讯与智慧</p>
             </div>
 
             <!-- 登录/注册表单 -->
@@ -223,7 +223,7 @@ function handleSubmit() {
 
             <!-- 底部信息 -->
             <div class="login-footer">
-                <p>购房决策智能助手 - 比赛演示项目</p>
+                <p>购房AI助手 - 比赛演示项目</p>
             </div>
         </div>
     </div>

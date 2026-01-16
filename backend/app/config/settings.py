@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     # CORS 配置（支持本地开发和 cpolar 穿透）
     CORS_ORIGINS: list[str] = [
         "http://localhost:5173",
-        "https://16b270c6.r37.cpolar.top",  # cpolar 前端穿透地址
+        "https://3e6579fa.r16.cpolar.top",  # cpolar 前端穿透地址
     ]
     
     class Config:

@@ -72,7 +72,7 @@ const router = createRouter({
 router.beforeEach(async (to, _from, next) => {
     // 设置页面标题
     const title = to.meta.title as string
-    document.title = title ? `${title} - 购房决策智能助手` : '购房决策智能助手'
+    document.title = title ? `${title} - 购房AI助手` : '购房AI助手'
 
     // 检查是否需要登录
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth !== false)

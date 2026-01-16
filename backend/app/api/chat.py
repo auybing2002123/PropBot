@@ -92,6 +92,7 @@ async def event_generator(
     # 收集完整的 AI 回复
     full_response = ""
     role_results = {}
+    references = []  # 收集引用数据
     
     try:
         async for event in engine.process(user_message, session_id, mode):
@@ -102,6 +103,10 @@ async def event_generator(
                 role_results[role_id] = content
                 full_response = content  # 最后一个角色的结果作为完整回复
             
+            # 收集引用数据（在 done 事件中）
+            if event.get("type") == "done" and "references" in event:
+                references = event.get("references", [])
+            
             # 将事件转换为 SSE 格式
             event_data = json.dumps(event, ensure_ascii=False)
             yield f"data: {event_data}\n\n"
@@ -109,11 +114,16 @@ async def event_generator(
         # 保存 AI 回复到数据库
         if conv_service and actual_conversation_id and full_response:
             try:
+                # 构建 metadata，包含引用数据
+                metadata = {"role_results": role_results, "mode": mode}
+                if references:
+                    metadata["references"] = references
+                    
                 await conv_service.add_message(
                     conversation_id=actual_conversation_id,
                     role="assistant",
                     content=full_response,
-                    metadata={"role_results": role_results, "mode": mode}
+                    metadata=metadata
                 )
             except Exception as e:
                 logger.warning(f"保存 AI 回复失败: {e}")

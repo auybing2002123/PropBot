@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from app.agent.intent import IntentRecognizer, ExecutionPlan, ExecutionNode, get_intent_recognizer
 from app.agent.roles import Role, PURCHASE_CONSULTANT, get_role
 from app.agent.tools import tool_registry
+from app.agent.references import ReferenceCollector
 from app.llm.client import DeepSeekClient, LLMError, StreamResultCollector
 from app.db.database import get_db
 from app.utils.logger import get_logger
@@ -88,6 +89,8 @@ class AgentEngine:
     def __init__(self, llm_client: DeepSeekClient | None = None):
         self._llm_client = llm_client
         self._intent_recognizer: IntentRecognizer | None = None
+        # 引用收集器（每次对话重置）
+        self._reference_collector = ReferenceCollector()
     
     @property
     def llm_client(self) -> DeepSeekClient:
@@ -119,6 +122,9 @@ class AgentEngine:
             事件字典
         """
         logger.info(f"处理用户输入: session={session_id}, mode={mode}, input={user_input[:50]}...")
+        
+        # 清空引用收集器
+        self._reference_collector.clear()
         
         context = await self._load_context(session_id)
         context.add_message("user", user_input)
@@ -157,8 +163,12 @@ class AgentEngine:
             # 3. 保存上下文
             await self._save_context(context)
             
-            # 4. 完成
-            yield {"type": "done"}
+            # 4. 完成，返回引用列表
+            done_event = {"type": "done"}
+            if self._reference_collector.has_references():
+                done_event["references"] = self._reference_collector.get_references_dict()
+                logger.info(f"返回 {len(done_event['references'])} 个引用")
+            yield done_event
             
         except LLMError as e:
             logger.error(f"LLM 调用失败: {e.message}")
@@ -725,6 +735,12 @@ class AgentEngine:
                     result = await tool.execute(**tool_args)
                     tool_result = json.dumps(result, ensure_ascii=False)
                     
+                    # 收集引用（从检索类工具的结果中提取）
+                    if isinstance(result, dict):
+                        new_refs = self._reference_collector.add_from_tool_result(tool_name, result)
+                        if new_refs:
+                            logger.info(f"从工具 {tool_name} 收集了 {len(new_refs)} 个引用")
+                    
                     yield {
                         "type": "tool_result",
                         "tool_name": tool_name,
@@ -743,6 +759,16 @@ class AgentEngine:
                 "tool_call_id": tool_call_id,
                 "content": tool_result
             })
+        
+        # 如果有引用，在消息中添加引用提示词
+        if self._reference_collector.has_references():
+            ref_prompt = self._reference_collector.get_reference_prompt()
+            # 在最后一条 tool 消息后添加引用提示
+            messages.append({
+                "role": "user",
+                "content": ref_prompt
+            })
+            logger.debug("已添加引用提示词到消息中")
         
         # 工具调用后，流式调用 LLM 获取最终回复
         tools = tool_registry.get_schemas(role.tools)

@@ -31,7 +31,7 @@ const pageTitles: Record<string, string> = {
 
 // 当前页面标题
 const pageTitle = computed(() => {
-  return pageTitles[route.path] || '购房决策智能助手'
+  return pageTitles[route.path] || '购房AI助手'
 })
 
 // 切换侧边栏
@@ -54,9 +54,6 @@ function toggleSidebar() {
           <Fold v-else />
         </el-icon>
       </el-button>
-      
-      <!-- 页面标题 -->
-      <span class="page-title">{{ pageTitle }}</span>
     </div>
   </header>
 </template>
@@ -66,7 +63,6 @@ function toggleSidebar() {
   height: 56px;
   padding: 0 16px;
   background: #ffffff;
-  border-bottom: 1px solid #e4e7ed;
   display: flex;
   align-items: center;
   flex-shrink: 0;

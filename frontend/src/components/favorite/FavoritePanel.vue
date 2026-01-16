@@ -1,21 +1,35 @@
 <script setup lang="ts">
 /**
- * 关注面板组件
- * 右下角悬浮按钮 + 展开面板
+ * 多功能浮动按钮组件
+ * 主按钮：我的关注 + 小工具菜单
  */
 import { ref, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { Star, Close, Delete, ChatLineSquare } from '@element-plus/icons-vue'
+import { useRouter, useRoute } from 'vue-router'
+import { 
+  Star, 
+  Close, 
+  Delete, 
+  ChatLineSquare,
+  DataAnalysis,
+  TrendCharts,
+  Document,
+  QuestionFilled,
+  Plus
+} from '@element-plus/icons-vue'
 import { marked } from 'marked'
 import { useFavoriteStore } from '@/stores/favorite'
 import { useConversationStore } from '@/stores/conversation'
 
 const router = useRouter()
+const route = useRoute()
 const favoriteStore = useFavoriteStore()
 const conversationStore = useConversationStore()
 
-// 面板是否展开
-const expanded = ref(false)
+// 关注面板是否展开
+const favoriteExpanded = ref(false)
+
+// 工具菜单是否展开
+const toolsExpanded = ref(false)
 
 // 当前展开查看的收藏ID
 const expandedItemId = ref<string | null>(null)
@@ -23,17 +37,51 @@ const expandedItemId = ref<string | null>(null)
 // 收藏数量
 const count = computed(() => favoriteStore.count)
 
-// 切换面板
-function togglePanel() {
-  expanded.value = !expanded.value
-  if (expanded.value && !favoriteStore.loaded) {
-    favoriteStore.fetchFavorites()
+// 工具菜单项
+const toolMenus = [
+  { path: '/calculator', name: '计算器', icon: DataAnalysis },
+  { path: '/market', name: '市场分析', icon: TrendCharts },
+  { path: '/policy', name: '政策查询', icon: Document },
+  { path: '/help', name: '帮助中心', icon: QuestionFilled }
+]
+
+// 切换关注面板
+function toggleFavorite() {
+  favoriteExpanded.value = !favoriteExpanded.value
+  if (favoriteExpanded.value) {
+    toolsExpanded.value = false
+    if (!favoriteStore.loaded) {
+      favoriteStore.fetchFavorites()
+    }
   }
 }
 
-// 关闭面板
-function closePanel() {
-  expanded.value = false
+// 切换工具菜单
+function toggleTools() {
+  toolsExpanded.value = !toolsExpanded.value
+  if (toolsExpanded.value) {
+    favoriteExpanded.value = false
+  }
+}
+
+// 处理工具点击
+function handleToolClick(path: string) {
+  if (route.path === path) {
+    router.push('/chat')
+  } else {
+    router.push(path)
+  }
+  toolsExpanded.value = false
+}
+
+// 关闭关注面板
+function closeFavoritePanel() {
+  favoriteExpanded.value = false
+}
+
+// 关闭工具菜单
+function closeTools() {
+  toolsExpanded.value = false
 }
 
 // 切换展开收藏项
@@ -55,7 +103,7 @@ async function handleJump(conversationId: string | undefined, event: Event) {
   // 加载对应对话
   await conversationStore.loadConversation(conversationId)
   router.push('/chat')
-  closePanel()
+  closeFavoritePanel()
 }
 
 // 渲染 Markdown
@@ -86,25 +134,67 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="favorite-wrapper">
-    <!-- 悬浮按钮 -->
-    <div 
-      class="favorite-fab"
-      :class="{ active: expanded }"
-      @click="togglePanel"
-    >
-      <el-icon :size="22">
-        <Star />
-      </el-icon>
-      <span v-if="count > 0" class="fab-badge">{{ count > 99 ? '99+' : count }}</span>
+  <div class="fab-wrapper">
+    <!-- 按钮组 -->
+    <div class="fab-group">
+      <!-- 主按钮：我的关注 -->
+      <div 
+        class="main-fab"
+        :class="{ active: favoriteExpanded }"
+        @click="toggleFavorite"
+      >
+        <el-icon :size="20">
+          <Star />
+        </el-icon>
+        <span v-if="count > 0" class="fab-badge">{{ count > 99 ? '99+' : count }}</span>
+      </div>
+      
+      <!-- 小工具按钮 -->
+      <div 
+        class="tools-fab"
+        :class="{ active: toolsExpanded }"
+        @click="toggleTools"
+      >
+        <el-icon :size="16">
+          <Plus />
+        </el-icon>
+      </div>
     </div>
     
-    <!-- 收藏面板 -->
+    <!-- 工具卡片 -->
+    <transition name="tools-slide">
+      <div v-if="toolsExpanded" class="tools-card">
+        <div class="tools-header">
+          <span class="tools-title">小工具</span>
+          <el-button text class="close-btn" @click="closeTools">
+            <el-icon><Close /></el-icon>
+          </el-button>
+        </div>
+        <div class="tools-grid">
+          <div
+            v-for="tool in toolMenus"
+            :key="tool.path"
+            class="tool-item"
+            :class="{ active: route.path === tool.path }"
+            @click="handleToolClick(tool.path)"
+          >
+            <div class="tool-icon">
+              <el-icon :size="20">
+                <component :is="tool.icon" />
+              </el-icon>
+            </div>
+            <span class="tool-name">{{ tool.name }}</span>
+          </div>
+        </div>
+      </div>
+    </transition>
+    
+    <!-- 关注面板 -->
     <transition name="panel-slide">
-      <div v-if="expanded" class="favorite-panel">
+      <div v-if="favoriteExpanded" class="favorite-panel">
         <div class="panel-header">
           <span class="panel-title">我的关注</span>
-          <el-button text class="close-btn" @click="closePanel">
+          <el-button text class="close-btn" @click="closeFavoritePanel">
             <el-icon><Close /></el-icon>
           </el-button>
         </div>
@@ -168,15 +258,55 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.favorite-wrapper {
+.fab-wrapper {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: 32px;
+  bottom: 100px;
   z-index: 200;
 }
 
-// 悬浮按钮
-.favorite-fab {
+// 移动端适配
+@media (max-width: 768px) {
+  .fab-wrapper {
+    right: 16px;
+    bottom: 180px;
+  }
+  
+  .main-fab {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .tools-fab {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .tools-card {
+    width: calc(100vw - 32px);
+    max-width: 280px;
+    right: 0;
+    bottom: 56px;
+  }
+  
+  .favorite-panel {
+    width: calc(100vw - 32px);
+    max-width: 360px;
+    right: 0;
+    bottom: 56px;
+  }
+}
+
+// 按钮组
+.fab-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+// 主按钮：我的关注
+.main-fab {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -217,6 +347,130 @@ onMounted(() => {
     color: #fff;
     border-radius: 9px;
   }
+}
+
+// 小工具按钮
+.tools-fab {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #999;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    color: #1890ff;
+  }
+  
+  &.active {
+    background: #1890ff;
+    border-color: #1890ff;
+    color: #fff;
+    transform: rotate(45deg);
+  }
+}
+
+// 工具卡片
+.tools-card {
+  position: absolute;
+  right: 0;
+  bottom: 60px;
+  width: 280px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.tools-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  .tools-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .close-btn {
+    padding: 4px;
+    color: #999;
+    
+    &:hover {
+      color: #666;
+    }
+  }
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: #f0f0f0;
+  padding: 1px;
+}
+
+.tool-item {
+  background: #fff;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover {
+    background: #f5f7fa;
+  }
+  
+  &.active {
+    background: #e6f4ff;
+    
+    .tool-icon {
+      color: #1890ff;
+    }
+  }
+  
+  .tool-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f5f7fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    transition: all 0.2s;
+  }
+  
+  .tool-name {
+    font-size: 12px;
+    color: #666;
+  }
+}
+
+// 工具卡片动画
+.tools-slide-enter-active,
+.tools-slide-leave-active {
+  transition: all 0.25s ease;
+}
+
+.tools-slide-enter-from,
+.tools-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
 }
 
 // 收藏面板

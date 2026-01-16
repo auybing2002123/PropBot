@@ -26,7 +26,8 @@ const suggestQuestions = [
   '首套房契税怎么算？',
   '南宁最新的购房政策有哪些？',
   '月收入1万能买多少钱的房？',
-  '等额本息和等额本金哪个划算？'
+  '等额本息和等额本金哪个划算？',
+  '我想在南宁买150万的房子，月入1.5万，现在是好时机吗'
 ]
 
 // 发送消息
@@ -124,7 +125,7 @@ onUnmounted(() => {
         <div class="welcome-content">
           <!-- 欢迎语 -->
           <h1 class="welcome-title">Hi，{{ authStore.nickname || '欢迎使用' }}</h1>
-          <p class="welcome-subtitle">我是你的购房决策助手，有什么可以帮你的？</p>
+          <p class="welcome-subtitle">我是你的购房AI助手，有什么可以帮你的？</p>
           
           <!-- 引导问题标签 -->
           <div class="suggest-questions">
@@ -171,6 +172,7 @@ onUnmounted(() => {
                 :thinking-steps="msg.thinkingSteps"
                 :is-thinking="msg.loading && chatStore.isThinking"
                 :show-thinking="msg.showThinking"
+                :references="msg.references"
                 @toggle-expert="chatStore.toggleExpertAnalysis(msg.id)"
                 @toggle-thinking="chatStore.toggleMessageThinking(msg.id)"
                 @send-question="handleSend"
@@ -199,7 +201,7 @@ onUnmounted(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: #f5f7fa;
+  background: #ffffff;
 }
 
 .message-list {
@@ -237,27 +239,87 @@ onUnmounted(() => {
   }
 }
 
-// 引导问题标签
+// 引导问题标签 - 横向滚动的3行布局
 .suggest-questions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
-  max-width: 650px;
-  margin: 0 auto;
+  gap: 12px 16px;
+  max-width: 100%;
+  padding: 4px 0;
 }
 
 .suggest-tag {
-  padding: 10px 18px;
-  background: #f0f0f0;
+  padding: 10px 20px;
+  background: #f5f5f5;
   border-radius: 20px;
   font-size: 14px;
   color: #333;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
+  border: 1px solid #e8e8e8;
   
   &:hover {
-    background: #e0e0e0;
+    background: #ebebeb;
+    border-color: #d9d9d9;
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .message-list {
+    padding: 16px;
+  }
+  
+  .welcome-container {
+    padding: 16px;
+    // 保持垂直居中
+  }
+  
+  .welcome-content {
+    .welcome-title {
+      font-size: 24px;
+    }
+    
+    .welcome-subtitle {
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+  }
+  
+  // 移动端问题：横向滚动的3行布局
+  .suggest-questions {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 8px 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .suggest-tag {
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 16px;
+  }
+  
+  .input-area {
+    padding: 12px 16px 16px;
+  }
+  
+  .user-bubble {
+    max-width: 85%;
   }
 }
 
@@ -290,7 +352,7 @@ onUnmounted(() => {
 
 // 输入区域
 .input-area {
-  background: #f5f7fa;
+  background: #ffffff;
   padding: 16px 24px 24px;
 }
 </style>

@@ -1,31 +1,10 @@
 <script setup lang="ts">
 /**
  * 聊天输入框组件
- * 参考图片布局：输入框在上，功能按钮在下
- * 支持多助手切换（购房、租房、学区房、验房、商业选址、租赁管理）
+ * 简洁版：只保留输入框和发送按钮
  */
 import { ref } from 'vue'
-import { Promotion, VideoPause, HomeFilled, Unlock, Collection, View, Shop, List } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
-
-// 助手类型定义
-interface Assistant {
-  id: string
-  name: string
-  icon: any
-  description: string
-  available: boolean  // 是否可用（后期开发）
-}
-
-// 可用的助手列表
-const assistants: Assistant[] = [
-  { id: 'purchase', name: '购房助手', icon: HomeFilled, description: '买房决策、贷款计算、政策咨询', available: true },
-  { id: 'rental', name: '租房助手', icon: Unlock, description: '租房找房、租金估算、合同审查', available: false },
-  { id: 'school', name: '学区房', icon: Collection, description: '学区匹配、学校查询、房源推荐', available: false },
-  { id: 'inspection', name: '验房助手', icon: View, description: '收房验房、问题识别、维权指导', available: false },
-  { id: 'commercial', name: '商业选址', icon: Shop, description: '商铺投资、人流分析、租金回报', available: false },
-  { id: 'management', name: '租赁管理', icon: List, description: '租客管理、收租提醒、合同管理', available: false },
-]
+import { Promotion, VideoPause } from '@element-plus/icons-vue'
 
 // Props
 const props = defineProps<{
@@ -41,7 +20,6 @@ const emit = defineEmits<{
 }>()
 
 const inputValue = ref('')
-const currentAssistant = ref('purchase')  // 当前选中的助手
 
 // 发送消息
 function handleSend() {
@@ -65,21 +43,6 @@ function handleKeydown(e: Event | KeyboardEvent) {
     handleSend()
   }
 }
-
-// 切换助手
-function selectAssistant(id: string) {
-  const assistant = assistants.find(a => a.id === id)
-  if (assistant?.available) {
-    currentAssistant.value = id
-  } else if (assistant) {
-    ElMessage.info(`${assistant.name}即将上线，敬请期待`)
-  }
-}
-
-// 获取当前助手信息
-function getCurrentAssistant() {
-  return assistants.find(a => a.id === currentAssistant.value)
-}
 </script>
 
 <template>
@@ -97,31 +60,9 @@ function getCurrentAssistant() {
           class="chat-textarea"
           @keydown="handleKeydown"
         />
-      </div>
-      
-      <!-- 底部功能栏 -->
-      <div class="action-bar">
-        <div class="action-left">
-          <!-- 助手选择器（替代原来的多专家协作按钮） -->
-          <div class="assistant-selector">
-            <div 
-              v-for="assistant in assistants"
-              :key="assistant.id"
-              class="assistant-item"
-              :class="{ 
-                active: currentAssistant === assistant.id,
-                disabled: !assistant.available 
-              }"
-              :title="assistant.available ? assistant.description : '即将上线'"
-              @click="selectAssistant(assistant.id)"
-            >
-              <el-icon :size="14"><component :is="assistant.icon" /></el-icon>
-              <span>{{ assistant.name }}</span>
-            </div>
-          </div>
-        </div>
         
-        <div class="action-right">
+        <!-- 发送/停止按钮 -->
+        <div class="send-area">
           <!-- 停止按钮（生成中显示） -->
           <el-button
             v-if="loading"
@@ -144,6 +85,7 @@ function getCurrentAssistant() {
         </div>
       </div>
     </div>
+    
     <div class="input-hint">
       <span>内容由AI生成，仅供参考</span>
     </div>
@@ -172,9 +114,14 @@ function getCurrentAssistant() {
 
   // 输入框区域
   .input-area {
-    padding: 12px 16px 8px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
 
     .chat-textarea {
+      flex: 1;
+      
       :deep(.el-textarea__inner) {
         border: none;
         box-shadow: none;
@@ -183,6 +130,7 @@ function getCurrentAssistant() {
         font-size: 14px;
         line-height: 1.6;
         background: transparent;
+        min-height: 24px;
 
         &:focus {
           box-shadow: none;
@@ -193,61 +141,11 @@ function getCurrentAssistant() {
         }
       }
     }
-  }
-
-  // 底部功能栏
-  .action-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px 12px;
-
-    .action-left {
-      display: flex;
-      align-items: center;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    .action-right {
-      display: flex;
-      align-items: center;
+    
+    .send-area {
       flex-shrink: 0;
-      margin-left: 8px;
-    }
-
-    // 助手选择器
-    .assistant-selector {
       display: flex;
-      gap: 4px;
-      
-      .assistant-item {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        padding: 6px 12px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 13px;
-        color: #666;
-        background: transparent;
-        transition: all 0.2s;
-        user-select: none;
-        
-        &:hover:not(.disabled) {
-          background: #e8e8e8;
-        }
-        
-        &.active {
-          background: #e6f4ff;
-          color: #1890ff;
-        }
-        
-        &.disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-      }
+      align-items: center;
     }
 
     // 发送按钮

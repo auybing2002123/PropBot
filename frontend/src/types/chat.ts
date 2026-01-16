@@ -67,6 +67,8 @@ export interface ChatMessage {
     // 思考过程相关
     thinkingSteps?: ThinkingStep[]  // 思考步骤
     showThinking?: boolean          // 是否展开思考过程
+    // 引用来源相关
+    references?: Reference[]        // 引用来源列表
 }
 
 // 专家分析（用于折叠展示）
@@ -76,6 +78,20 @@ export interface ExpertAnalysis {
     roleIcon: string
     roleColor: string
     content: string
+}
+
+// 引用来源类型
+export type ReferenceType = 'knowledge' | 'database' | 'web' | 'faq' | 'policy' | 'guide'
+
+// 引用来源
+export interface Reference {
+    id: number                    // 引用编号，如 1, 2, 3
+    type: ReferenceType           // 来源类型
+    title: string                 // 标题
+    content: string               // 摘要内容
+    source?: string               // 具体来源（文件名/表名/URL）
+    relevance?: number            // 相关度分数（0-100）
+    city?: string                 // 城市（如适用）
 }
 
 // 聊天请求参数
@@ -121,6 +137,8 @@ export interface SSEEvent {
     step_type?: 'planning' | 'role_dispatch' | 'tool_call' | 'tool_result' | 'synthesizing'
     tool_name?: string
     tool_args?: string
+    // 引用来源相关
+    references?: Reference[]  // 引用来源列表
 }
 
 // 快捷问题

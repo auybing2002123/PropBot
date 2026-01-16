@@ -33,6 +33,7 @@
 ### 项目根目录
 - Windows 路径：`E:\code\PropBot\`
 - WSL 路径：`/mnt/e/code/PropBot/`
+- **终端**: CMD（命令提示符），不是 PowerShell
 
 ### 前端
 - 位置：`frontend/`（项目根目录下）
@@ -82,6 +83,7 @@
 - 变量命名：英文，注释用中文（方便比赛展示）
 
 ## Git 规范
+- git 要在Windows下的CMD中执行
 - commit 信息用中文（方便评委查看）
 - 分支策略：main 主分支，feature/* 功能开发
 
