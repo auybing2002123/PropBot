@@ -25,6 +25,7 @@ logs/
 # IDE
 .idea/
 .vscode/
+.kiro/
 *.suo
 *.ntvs*
 *.njsproj
